@@ -1,0 +1,71 @@
+---
+name: ci
+on:
+  pull_request:
+    paths:
+      - "**/**"
+
+jobs:
+  lint:
+    name: Super Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Lint Code Base
+        uses: github/super-linter@v7
+        env:
+          DEFAULT_BRANCH: main
+          FILTER_REGEX_EXCLUDE: \.github.*
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINTER_RULES_PATH: .
+          PYTHON_BLACK_CONFIG_FILE: pyproject.toml
+          PYTHON_ISORT_CONFIG_FILE: pyproject.toml
+          PYTHON_PYLINT_CONFIG_FILE: pyproject.toml
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_CHECKOV: false
+          VALIDATE_JSCPD: false
+          VALIDATE_MARKDOWN_PRETTIER: false
+          VALIDATE_PYTHON_FLAKE8: false
+          VALIDATE_PYTHON_PYINK: false
+          VALIDATE_PYTHON_RUFF: false
+          VALIDATE_YAML_PRETTIER: false
+
+  # pytest:
+  #   name: Pytests
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v5
+  #       with:
+  #         python-version: "3.12"
+
+  #     - name: Install Dependencies
+  #       run: |
+  #         if [ -e setup.py ]; then python3 -m pip install .; fi
+  #         if [ -e requirements.txt ]; then python3 -m pip install -r requirements.txt; fi
+  #         python3 -m pip install pytest pytest-cov
+
+  #     - name: Build coverage file
+  #       run: |
+  #         pytest --junitxml=/tmp/pytest.xml --cov-report=term-missing:skip-covered --cov=app tests/ | tee /tmp/pytest-coverage.txt
+
+  #     - name: Pytest coverage comment
+  #       uses: MishaKav/pytest-coverage-comment@main
+  #       with:
+  #         pytest-coverage-path: /tmp/pytest-coverage.txt
+  #         junitxml-path: /tmp/pytest.xml
+  #         title: Coverage Report - `${{ matrix.script_dir }}`
+  #         hide-report: false
+  #         create-new-comment: false
+  #         hide-comment: false
+  #         report-only-changed-files: false
+  #         unique-id-for-comment: ${{ matrix.script_dir }}
+  #         junitxml-title: JUnit Xml Summary - `${{ matrix.script_dir }}`
