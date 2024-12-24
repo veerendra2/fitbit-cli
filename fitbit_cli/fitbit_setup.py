@@ -22,7 +22,7 @@ from .exceptions import FitbitInitError
 from .formatter import CONSOLE
 
 BASE_URL = "https://www.fitbit.com/oauth2/authorize"
-FITBIT_TOKEN_PATH = f"{Path.home()}/.fitbit/token.json2"
+FITBIT_TOKEN_PATH = f"{Path.home()}/.fitbit/token.json"
 SCOPE = [
     "activity",
     "cardio_fitness",
