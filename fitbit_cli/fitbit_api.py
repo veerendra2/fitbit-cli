@@ -6,6 +6,7 @@ Fitbit API
 import requests
 
 from .exceptions import FitbitAPIError
+from .fitbit_setup import update_fitbit_token
 
 
 class FitbitAPI:
@@ -47,8 +48,9 @@ class FitbitAPI:
             self.access_token = tokens.get("access_token")
             self.refresh_token = tokens.get("refresh_token")
             self.headers = self._create_headers()
+            update_fitbit_token(self.access_token, self.refresh_token)
         else:
-            raise FitbitAPIError("Failed to refresh access token")
+            raise FitbitAPIError(f"Failed to refresh access token: {response.json()}")
 
     def make_request(self, method, url, **kwargs):
         """Make an API request and handle token refresh if needed."""
