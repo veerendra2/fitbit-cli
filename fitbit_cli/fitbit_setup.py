@@ -171,14 +171,14 @@ def read_fitbit_token():
     try:
         with open(FITBIT_TOKEN_PATH, "r", encoding="utf-8") as f:
             token_content = json.load(f)
-    except FileNotFoundError:
+    except FileNotFoundError as e:
         raise FitbitInitError(
-            f"Token file not found at {FITBIT_TOKEN_PATH}. Please run the initialization with --init"
-        )
+            f"Token file not found at {FITBIT_TOKEN_PATH}. Please run the initialization with --init-auth"
+        ) from e
     except json.JSONDecodeError:
         raise FitbitInitError(
-            "Error decoding the token file. Please re-run the initialization with --init"
-        )
+            "Error decoding the token file. Please re-run the initialization with --init-auth"
+        ) from e
 
     return token_content
 

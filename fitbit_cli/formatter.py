@@ -74,10 +74,10 @@ def display_spo2(spo2_data):
 
     for spo2 in spo2_data:
         table.add_row(
-            spo2["dateTime"],
-            str(spo2["value"].get("min", "N/A")),
-            str(spo2["value"].get("avg", "N/A")),
-            str(spo2["value"].get("max", "N/A")),
+            spo2.get("dateTime", "N/A"),
+            str(spo2.get("value", {}).get("min", "N/A")),
+            str(spo2.get("value", {}).get("avg", "N/A")),
+            str(spo2.get("value", {}).get("max", "N/A")),
         )
 
     CONSOLE.print(table)

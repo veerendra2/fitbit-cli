@@ -34,9 +34,9 @@ def parse_arguments():
 
     parser.add_argument(
         "-i",
-        "--init",
+        "--init-auth",
         action="store_true",
-        help="Run interative setup to fetch token.",
+        help="Initialize Fitbit authentication setup.",
     )
 
     group = parser.add_argument_group(
