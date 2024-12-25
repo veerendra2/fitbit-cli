@@ -95,4 +95,9 @@ def parse_arguments():
         help="Show fitbit-cli version",
     )
 
-    return parser.parse_args()
+    args = parser.parse_args()
+
+    if not any(vars(args).values()):
+        parser.error("No arguments provided. At least one argument is required.")
+
+    return args
