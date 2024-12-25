@@ -163,3 +163,38 @@ def fitbit_init_setup():
             f":unamused: Failed to get tokens: {response.json()['errors'][0]['errorType']}",
             style="bold red",
         )
+
+
+def read_fitbit_token():
+    """Read the Fitbit token from the file and return as a JSON object."""
+
+    try:
+        with open(FITBIT_TOKEN_PATH, "r", encoding="utf-8") as f:
+            token_content = json.load(f)
+    except FileNotFoundError as e:
+        raise FitbitInitError(
+            f"Token file not found at {FITBIT_TOKEN_PATH}. Please run the initialization with --init-auth"
+        ) from e
+    except json.JSONDecodeError:
+        raise FitbitInitError(
+            "Error decoding the token file. Please re-run the initialization with --init-auth"
+        ) from e
+
+    return token_content
+
+
+def write_fitbit_token(token_content):
+    """Write the Fitbit token to the file."""
+
+    Path(FITBIT_TOKEN_PATH).parent.mkdir(parents=True, exist_ok=True)
+    with open(FITBIT_TOKEN_PATH, "w", encoding="utf-8") as f:
+        json.dump(token_content, f)
+
+
+def update_fitbit_token(access_token, refresh_token):
+    """Update the Fitbit token in the file."""
+
+    token_content = read_fitbit_token()
+    token_content["access_token"] = access_token
+    token_content["refresh_token"] = refresh_token
+    write_fitbit_token(token_content)

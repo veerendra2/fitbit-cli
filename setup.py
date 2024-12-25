@@ -32,7 +32,7 @@ setup(
     keywords=["fitbit", "cli", "python"],
     license="MIT",
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: End Users/Desktop",
         "License :: OSI Approved :: Apache Software License",
         "Natural Language :: English",

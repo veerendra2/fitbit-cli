@@ -1,5 +1,9 @@
 # Fitbit CLI
 
+[![Release](https://github.com/veerendra2/fitbit-cli/actions/workflows/release.yml/badge.svg?branch=main&event=release)](https://github.com/veerendra2/fitbit-cli/actions/workflows/release.yml) [![PyPI - Status](https://img.shields.io/pypi/status/fitbit-cli)
+](https://pypi.org/project/fitbit-cli/) [![PyPI - Version](https://img.shields.io/pypi/v/fitbit-cli)
+](https://pypi.org/project/fitbit-cli/)
+
 > ⚠️ This is not an official Fitbit CLI
 
 Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, ❤️ heart rate, 🏋️‍♂️ activity levels, 🩸 SpO2, and more, all presented in a simple, easy-to-read table format!
@@ -27,14 +31,13 @@ Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, 
 python -m pip install fitbit-cli
 
 fitbit-cli -h
-usage: fitbit-cli [-h] [-d | -i] [-s [DATE[,DATE]]] [-o [DATE[,DATE]]] [-e [DATE[,DATE]]] [-a [DATE[,DATE]]] [-u] [-v]
+usage: fitbit-cli [-h] [-i] [-s [DATE[,DATE]]] [-o [DATE[,DATE]]] [-e [DATE[,DATE]]] [-a [DATE[,DATE]]] [-u] [-v]
 
 Fitbit CLI -- Access your Fitbit data at your terminal.
 
 options:
   -h, --help            show this help message and exit
-  -d, --json-dump       Dump all your Fitbit data in json files.
-  -i, --init            Run interative setup to fetch token.
+  -i, --init-auth       Initialize Fitbit iterative authentication setup
   -v, --version         Show fitbit-cli version
 
 APIs:
@@ -42,13 +45,13 @@ APIs:
   You can provide a single date or a range (start,end). If not provided, defaults to today's date.
 
   -s, --sleep [DATE[,DATE]]
-                        Sleep data
+                        Show sleep data
   -o, --spo2 [DATE[,DATE]]
-                        SpO2 data
+                        Show SpO2 data
   -e, --heart [DATE[,DATE]]
-                        Heart Rate Time Series
+                        Show Heart Rate Time Series data
   -a, --active-zone [DATE[,DATE]]
-                        Active Zone Minutes (AZM) Time Series
+                        Show Active Zone Minutes (AZM) Time Series data
   -u, --show-user-profile
                         Show user profile data
 ```

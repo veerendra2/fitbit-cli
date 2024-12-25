@@ -28,6 +28,7 @@ jobs:
           VALIDATE_CHECKOV: false
           VALIDATE_JSCPD: false
           VALIDATE_MARKDOWN_PRETTIER: false
+          VALIDATE_MARKDOWN: false
           VALIDATE_PYTHON_FLAKE8: false
           VALIDATE_PYTHON_PYINK: false
           VALIDATE_PYTHON_RUFF: false

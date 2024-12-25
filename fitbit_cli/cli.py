@@ -34,9 +34,9 @@ def parse_arguments():
 
     parser.add_argument(
         "-i",
-        "--init",
+        "--init-auth",
         action="store_true",
-        help="Run interative setup to fetch token.",
+        help="Initialize Fitbit iterative authentication setup",
     )
 
     group = parser.add_argument_group(
@@ -51,7 +51,7 @@ def parse_arguments():
         nargs="?",
         const=(datetime.today().date(), None),
         metavar="DATE[,DATE]",
-        help="Sleep data",
+        help="Show sleep data",
     )
     group.add_argument(
         "-o",
@@ -60,7 +60,7 @@ def parse_arguments():
         nargs="?",
         const=(datetime.today().date(), None),
         metavar="DATE[,DATE]",
-        help="SpO2 data",
+        help="Show SpO2 data",
     )
     group.add_argument(
         "-e",
@@ -69,7 +69,7 @@ def parse_arguments():
         nargs="?",
         const=(datetime.today().date(), None),
         metavar="DATE[,DATE]",
-        help="Heart Rate Time Series",
+        help="Show Heart Rate Time Series data",
     )
     group.add_argument(
         "-a",
@@ -78,7 +78,7 @@ def parse_arguments():
         nargs="?",
         const=(datetime.today().date(), None),
         metavar="DATE[,DATE]",
-        help="Active Zone Minutes (AZM) Time Series",
+        help="Show Active Zone Minutes (AZM) Time Series data",
     )
     group.add_argument(
         "-u",
