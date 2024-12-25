@@ -95,7 +95,7 @@ $ fitbit-cli -s
 └────────────┴──────────────┴────────────────┴──────────────┴──────────────┴───────────────┘
 ```
 
-**NOTE: The token is valid for only 8 hours. The `fitbit-cli` automatically refreshes the token when it expires.**
+_**NOTE: The token is valid for only 8 hours, `fitbit-cli` automatically refreshes the token when it expires.**_
 
 ## Local Development
 
