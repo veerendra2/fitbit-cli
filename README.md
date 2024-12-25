@@ -1,6 +1,6 @@
 # Fitbit CLI
 
-[![Release](https://github.com/veerendra2/fitbit-cli/actions/workflows/release.yml/badge.svg?branch=main&event=release)](https://github.com/veerendra2/fitbit-cli/actions/workflows/release.yml) [![PyPI - Status](https://img.shields.io/pypi/status/fitbit-cli)
+[![Release](https://github.com/veerendra2/fitbit-cli/actions/workflows/release.yml/badge.svg)](https://github.com/veerendra2/fitbit-cli/actions/workflows/release.yml) [![PyPI - Status](https://img.shields.io/pypi/status/fitbit-cli)
 ](https://pypi.org/project/fitbit-cli/) [![PyPI - Version](https://img.shields.io/pypi/v/fitbit-cli)
 ](https://pypi.org/project/fitbit-cli/)
 
@@ -9,8 +9,10 @@
 Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, ❤️ heart rate, 🏋️‍♂️ activity levels, 🩸 SpO2, and more, all presented in a simple, easy-to-read table format!
 
 <p align="center">
-  <img alt="Fitbit logo", width="250" src="./assets/Fitbit_Logo_White_RGB.jpg">
+  <img alt="Fitbit logo", width="250" src="https://raw.githubusercontent.com/veerendra2/fitbit-cli/refs/heads/main/assets/Fitbit_Logo_White_RGB.jpg">
 </p>
+
+[![asciicast](https://asciinema.org/a/696114.svg)](https://asciinema.org/a/696114)
 
 ## Supported Web APIs
 
@@ -25,11 +27,17 @@ Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, 
 | [Active Zone Minutes (AZM) Time Series](https://dev.fitbit.com/build/reference/web-api/active-zone-minutes-timeseries/) | ✅     |
 | [Activity](https://dev.fitbit.com/build/reference/web-api/activity/)                                                    | 👷     |
 
-## Install
+## Usage Guide
+
+1. Install the Fitbit CLI
 
 ```bash
 python -m pip install fitbit-cli
+```
 
+2. Help
+
+```bash
 fitbit-cli -h
 usage: fitbit-cli [-h] [-i] [-s [DATE[,DATE]]] [-o [DATE[,DATE]]] [-e [DATE[,DATE]]] [-a [DATE[,DATE]]] [-u] [-v]
 
@@ -56,15 +64,38 @@ APIs:
                         Show user profile data
 ```
 
-## Register Fitbit App
+3. Register Fitbit App
 
-1. Go to [https://dev.fitbit.com/apps](https://dev.fitbit.com/apps)
-2. Click on "REGISTER AN APP" tab
-3. Follow below example and register an app
+   1. Go to [https://dev.fitbit.com/apps](https://dev.fitbit.com/apps)
+   2. Click on "REGISTER AN APP" tab
+   3. Follow below example and register an app
 
-<p align="left">
-  <img alt="Fitbit logo", width="700" src="./assets/fitbit-app-registration.png">
-</p>
+     <p align="left">
+       <img alt="Fitbit logo", width="700" src="https://raw.githubusercontent.com/veerendra2/fitbit-cli/refs/heads/main/assets/fitbit-app-registration.png">
+     </p>
+
+4. Run the following command to set up interactive authentication and store the Fitbit token locally
+
+   ```bash
+    fitbit-cli --init-auth
+   ```
+
+   For a visual guide, see the Asciinema recording below
+   [![asciicast](https://asciinema.org/a/696115.svg)](https://asciinema.org/a/696115)
+
+5. Start using it 😎
+
+```bash
+$ fitbit-cli -s
+                                   Sleep Data Summary 😴
+┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Date 📆    ┃ Deep Sleep 🛏 ┃ Light Sleep 💤 ┃ REM Sleep 🌙 ┃ Wake Time ⏰ ┃ Efficiency 💯 ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ 2024-12-25 │ 139 min      │ 190 min        │ 155 min      │ 54 min       │ 55%           │
+└────────────┴──────────────┴────────────────┴──────────────┴──────────────┴───────────────┘
+```
+
+_**NOTE: The token is valid for only 8 hours, `fitbit-cli` automatically refreshes the token when it expires.**_
 
 ## Local Development
 

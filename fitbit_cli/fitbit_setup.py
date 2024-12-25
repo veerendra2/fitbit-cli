@@ -103,7 +103,7 @@ def fitbit_init_setup():
         if browser_status:
             CONSOLE.print(
                 ":satellite: Waiting for authorization... "
-                + "(Check your browser or press 'Ctrl+C', authrize the app by opening the"
+                + "(Check your browser or press 'Ctrl+C', authorize the app by opening the"
                 + " above URL in your browser and past the redirect URL manually.)\n"
             )
             authorization_code = start_server()
@@ -166,7 +166,7 @@ def fitbit_init_setup():
 
 
 def read_fitbit_token():
-    """Read the Fitbit token from the file and return as a JSON object."""
+    """Read Fitbit token from the file and return as a JSON object."""
 
     try:
         with open(FITBIT_TOKEN_PATH, "r", encoding="utf-8") as f:
@@ -184,7 +184,7 @@ def read_fitbit_token():
 
 
 def write_fitbit_token(token_content):
-    """Write the Fitbit token to the file."""
+    """Write Fitbit token to the file."""
 
     Path(FITBIT_TOKEN_PATH).parent.mkdir(parents=True, exist_ok=True)
     with open(FITBIT_TOKEN_PATH, "w", encoding="utf-8") as f:
@@ -192,7 +192,7 @@ def write_fitbit_token(token_content):
 
 
 def update_fitbit_token(access_token, refresh_token):
-    """Update the Fitbit token in the file."""
+    """Update Fitbit token in the file."""
 
     token_content = read_fitbit_token()
     token_content["access_token"] = access_token
