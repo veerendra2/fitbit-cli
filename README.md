@@ -9,7 +9,7 @@
 Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, ❤️ heart rate, 🏋️‍♂️ activity levels, 🩸 SpO2, and more, all presented in a simple, easy-to-read table format!
 
 <p align="center">
-  <img alt="Fitbit logo", width="250" src="./assets/Fitbit_Logo_White_RGB.jpg">
+  <img alt="Fitbit logo", width="250" src="https://raw.githubusercontent.com/veerendra2/fitbit-cli/refs/heads/main/assets/Fitbit_Logo_White_RGB.jpg">
 </p>
 
 ## Supported Web APIs
@@ -63,7 +63,7 @@ APIs:
 3. Follow below example and register an app
 
 <p align="left">
-  <img alt="Fitbit logo", width="700" src="./assets/fitbit-app-registration.png">
+  <img alt="Fitbit logo", width="700" src="https://raw.githubusercontent.com/veerendra2/fitbit-cli/refs/heads/main/assets/fitbit-app-registration.png">
 </p>
 
 ## Local Development
