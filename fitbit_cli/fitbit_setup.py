@@ -103,7 +103,7 @@ def fitbit_init_setup():
         if browser_status:
             CONSOLE.print(
                 ":satellite: Waiting for authorization... "
-                + "(Check your browser or press 'Ctrl+C', authrize the app by opening the"
+                + "(Check your browser or press 'Ctrl+C', authorize the app by opening the"
                 + " above URL in your browser and past the redirect URL manually.)\n"
             )
             authorization_code = start_server()
