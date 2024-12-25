@@ -29,7 +29,7 @@ Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, 
 
 ## Usage Guide
 
-1. Install
+1. Install the Fitbit CLI
 
 ```bash
 python -m pip install fitbit-cli
@@ -74,13 +74,13 @@ APIs:
        <img alt="Fitbit logo", width="700" src="https://raw.githubusercontent.com/veerendra2/fitbit-cli/refs/heads/main/assets/fitbit-app-registration.png">
      </p>
 
-4. Run interative authentication setup to store fitbit token locally
+4. Run the following command to set up interactive authentication and store the Fitbit token locally
 
    ```bash
     fitbit-cli --init-auth
-    ...
    ```
 
+   For a visual guide, see the Asciinema recording below
    [![asciicast](https://asciinema.org/a/696115.svg)](https://asciinema.org/a/696115)
 
 5. Start using it 😎
