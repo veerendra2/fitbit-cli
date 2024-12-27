@@ -4,7 +4,7 @@
 ](https://pypi.org/project/fitbit-cli/) [![PyPI - Version](https://img.shields.io/pypi/v/fitbit-cli)
 ](https://pypi.org/project/fitbit-cli/)
 
-> ⚠️ This is not an official Fitbit CLI
+> This is not an official Fitbit CLI
 
 Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, ❤️ heart rate, 🏋️‍♂️ activity levels, 🩸 SpO2, and more, all presented in a simple, easy-to-read table format!
 
@@ -25,7 +25,7 @@ Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, 
 | [SpO2](https://dev.fitbit.com/build/reference/web-api/spo2/)                                                            | ✅     |
 | [Heart Rate Time Series](https://dev.fitbit.com/build/reference/web-api/heartrate-timeseries/)                          | ✅     |
 | [Active Zone Minutes (AZM) Time Series](https://dev.fitbit.com/build/reference/web-api/active-zone-minutes-timeseries/) | ✅     |
-| [Activity](https://dev.fitbit.com/build/reference/web-api/activity/)                                                    | 👷     |
+| [Activity](https://dev.fitbit.com/build/reference/web-api/activity/)                                                    | ✅     |
 
 ## Usage Guide
 

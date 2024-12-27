@@ -81,6 +81,15 @@ def parse_arguments():
         help="Show Active Zone Minutes (AZM) Time Series data",
     )
     group.add_argument(
+        "-b",
+        "--breathing-rate",
+        type=parse_date_range,
+        nargs="?",
+        const=(datetime.today().date(), None),
+        metavar="DATE[,DATE]",
+        help="Show Breathing Rate Summary data",
+    )
+    group.add_argument(
         "-u",
         "--show-user-profile",
         action="store_true",

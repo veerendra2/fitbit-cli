@@ -37,3 +37,7 @@ def main():
             fmt.display_heart_data(fitbit.get_heart_rate_time_series(*args.heart))
         if args.active_zone:
             fmt.display_azm_time_series(fitbit.get_azm_time_series(*args.active_zone))
+        if args.breathing_rate:
+            fmt.display_breathing_rate(
+                fitbit.get_breathing_rate_summary(*args.breathing_rate)
+            )
