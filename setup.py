@@ -29,7 +29,7 @@ setup(
     project_urls={
         "Documentation": "https://github.com/veerendra2/fitbit-cli",
     },
-    keywords=["fitbit", "cli", "python"],
+    keywords=["fitbit", "fitbit-api", "cli", "python"],
     license="MIT",
     classifiers=[
         "Development Status :: 5 - Production/Stable",

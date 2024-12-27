@@ -145,3 +145,20 @@ def display_azm_time_series(azm_data):
         )
 
     CONSOLE.print(table)
+
+
+def display_breathing_rate(breathing_rate_data):
+    """Breathing Rate data formatter"""
+
+    table = Table(title="Breathing Rate Summary 🫁", show_header=True)
+
+    table.add_column("Date :calendar:")
+    table.add_column("Breaths Per Minute :dash:")
+
+    for br in breathing_rate_data.get("br", []):
+        table.add_row(
+            br.get("dateTime", "N/A"),
+            str(br.get("value", {}).get("breathingRate", "N/A")),
+        )
+
+    CONSOLE.print(table)
