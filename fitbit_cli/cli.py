@@ -10,11 +10,9 @@ from . import __version__
 
 
 def _get_date_range(delta_days):
-    start_date = datetime.today() - timedelta(days=delta_days)
-    end_date = datetime.today()
     return (
-        start_date.date().strftime("%Y-%m-%d"),
-        end_date.date().strftime("%Y-%m-%d"),
+        (datetime.today() - timedelta(days=delta_days)).strftime("%Y-%m-%d"),
+        datetime.today().strftime("%Y-%m-%d"),
     )
 
 
@@ -22,7 +20,7 @@ def parse_date_range(date_str):
     """Date parser that handles both absolute and relative dates"""
 
     if date_str.lower() == "yesterday":
-        return (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d"), None
+        return (datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d"), None
 
     match = re.match(r"^last-(\d+)-(days|weeks|months)$", date_str, re.IGNORECASE)
     if match:
