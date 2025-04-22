@@ -49,9 +49,7 @@ setup(
         "Topic :: Utilities",
     ],
     install_requires=[
-        "arrow==1.3.0",
         "requests==2.32.3",
-        "timefhuman==0.1.1",
         "rich==14.0.0",
     ],
     python_requires=">=3.9",
