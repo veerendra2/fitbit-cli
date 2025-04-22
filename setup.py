@@ -51,8 +51,8 @@ setup(
     install_requires=[
         "arrow==1.3.0",
         "requests==2.32.3",
-        "rich==13.9.4",
         "timefhuman==0.1.1",
+        "rich==14.0.0",
     ],
     python_requires=">=3.9",
     entry_points={"console_scripts": ["fitbit-cli = fitbit_cli.main:main"]},
