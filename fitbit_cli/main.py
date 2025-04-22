@@ -26,7 +26,7 @@ def main():
         refresh_token=credentials["refresh_token"],
     )
 
-    with fmt.CONSOLE.status("[bold green]Fetching data...") as _:
+    with fmt.CONSOLE.status("Fetching data...") as _:
         if args.show_user_profile:
             fmt.display_user_profile(fitbit.get_user_profile())
         if args.sleep:
