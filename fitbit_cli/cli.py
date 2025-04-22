@@ -4,8 +4,9 @@ CLI Arguments Parser
 """
 
 import argparse
-from datetime import datetime, timedelta
 import re
+from datetime import datetime, timedelta
+
 from . import __version__
 
 
@@ -19,40 +20,41 @@ def _get_date_range(delta_days):
 def parse_date_range(date_str):
     """Date parser that handles both absolute and relative dates"""
 
+    result = (None, None)
+
     if date_str.lower() == "yesterday":
-        return (datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d"), None
+        result = ((datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d"), None)
+    else:
+        match = re.match(r"^last-(\d+)-(days|weeks|months)$", date_str, re.IGNORECASE)
+        if match:
+            number = int(match.group(1))
+            unit = match.group(2).lower()
+            if unit == "days":
+                result = _get_date_range(number)
+            elif unit == "weeks":
+                result = _get_date_range(number * 7)
+            elif unit == "months":
+                result = _get_date_range(number * 30)
+        else:
+            match_simple = re.match(r"^last-(week|month)$", date_str, re.IGNORECASE)
+            if match_simple:
+                unit = match_simple.group(1).lower()
+                if unit == "week":
+                    result = _get_date_range(7)
+                elif unit == "month":
+                    result = _get_date_range(30)
+            else:
+                dates = date_str.split(",")
+                start_date = datetime.strptime(dates[0], "%Y-%m-%d").date()
+                try:
+                    end_date = datetime.strptime(dates[1], "%Y-%m-%d").date()
+                    if start_date > end_date:
+                        raise ValueError("Start date must not be after end date")
+                except IndexError:
+                    end_date = None
+                result = (start_date, end_date)
 
-    match = re.match(r"^last-(\d+)-(days|weeks|months)$", date_str, re.IGNORECASE)
-    if match:
-        number = int(match.group(1))
-        unit = match.group(2).lower()
-
-        if unit == "days":
-            return _get_date_range(number)
-        elif unit == "weeks":
-            return _get_date_range(number * 7)
-        elif unit == "months":
-            return _get_date_range(number * 30)
-
-    match_simple = re.match(r"^last-(week|month)$", date_str, re.IGNORECASE)
-    if match_simple:
-        unit = match_simple.group(1).lower()
-
-        if unit == "week":
-            return _get_date_range(7)
-        elif unit == "month":
-            return _get_date_range(30)
-
-    dates = date_str.split(",")
-    start_date = datetime.strptime(dates[0], "%Y-%m-%d").date()
-    try:
-        end_date = datetime.strptime(dates[1], "%Y-%m-%d").date()
-        if start_date > end_date:
-            raise ValueError("Start date must not be after end date")
-    except IndexError:
-        end_date = None
-
-    return (start_date, end_date)
+    return result
 
 
 def parse_arguments():
