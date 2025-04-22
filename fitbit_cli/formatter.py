@@ -45,6 +45,7 @@ def display_sleep(sleep_data):
     table.add_column("REM Sleep :crescent_moon:")
     table.add_column("Wake Time :alarm_clock:")
     table.add_column("Efficiency :100:")
+    table.add_column("Time in Bed :clock1:")
 
     for sleep in sleep_data["sleep"]:
         table.add_row(
@@ -54,6 +55,7 @@ def display_sleep(sleep_data):
             f"{sleep['levels']['summary'].get('rem', {}).get('minutes', 'N/A')} min",
             f"{sleep['levels']['summary'].get('wake', {}).get('minutes', 'N/A')} min",
             f"{sleep['efficiency']}%",
+            f"{sleep['timeInBed'] / 60:.1f} hr",
         )
 
     CONSOLE.print(table)
