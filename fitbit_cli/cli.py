@@ -4,14 +4,47 @@ CLI Arguments Parser
 """
 
 import argparse
-from datetime import datetime
+import re
+from datetime import datetime, timedelta
 
 from . import __version__
 
 
-def parse_date_range(date_str):
-    """Date parser"""
+def _get_date_range(delta_days):
+    return (
+        (datetime.today() - timedelta(days=delta_days)).strftime("%Y-%m-%d"),
+        datetime.today().strftime("%Y-%m-%d"),
+    )
 
+
+def _parse_relative_dates(date_str):
+    """Helper function to parse relative date patterns"""
+    if date_str.lower() == "yesterday":
+        return ((datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d"), None)
+
+    match = re.match(r"^last-(\d+)-(days|weeks|months)$", date_str, re.IGNORECASE)
+    if match:
+        number = int(match.group(1))
+        unit = match.group(2).lower()
+        multipliers = {"days": 1, "weeks": 7, "months": 30}
+        return _get_date_range(number * multipliers[unit])
+
+    match = re.match(r"^last-(week|month)$", date_str, re.IGNORECASE)
+    if match:
+        unit = match.group(1).lower()
+        days = 7 if unit == "week" else 30
+        return _get_date_range(days)
+
+    return None
+
+
+def parse_date_range(date_str):
+    """Date parser that handles both absolute and relative dates"""
+    relative_result = _parse_relative_dates(date_str)
+    if relative_result:
+        return relative_result
+
+    # Handle absolute dates
     dates = date_str.split(",")
     start_date = datetime.strptime(dates[0], "%Y-%m-%d").date()
     try:
@@ -41,8 +74,9 @@ def parse_arguments():
 
     group = parser.add_argument_group(
         "APIs",
-        "Specify date ranges (ISO 8601 format: YYYY-MM-DD) for the following arguments.\n"
-        "You can provide a single date or a range (start,end). If not provided, defaults to today's date.",
+        "Specify a date, date range (YYYY-MM-DD[,YYYY-MM-DD]), or relative date.\n"
+        "Relative dates: yesterday, last-week, last-month, last-N-days/weeks/months (e.g., last-2-days).\n"
+        "If not provided, defaults to today's date.",
     )
     group.add_argument(
         "-s",
@@ -50,7 +84,7 @@ def parse_arguments():
         type=parse_date_range,
         nargs="?",
         const=(datetime.today().date(), None),
-        metavar="DATE[,DATE]",
+        metavar="DATE[,DATE]|RELATIVE",
         help="Show sleep data",
     )
     group.add_argument(
@@ -59,7 +93,7 @@ def parse_arguments():
         type=parse_date_range,
         nargs="?",
         const=(datetime.today().date(), None),
-        metavar="DATE[,DATE]",
+        metavar="DATE[,DATE]|RELATIVE",
         help="Show SpO2 data",
     )
     group.add_argument(
@@ -68,7 +102,7 @@ def parse_arguments():
         type=parse_date_range,
         nargs="?",
         const=(datetime.today().date(), None),
-        metavar="DATE[,DATE]",
+        metavar="DATE[,DATE]|RELATIVE",
         help="Show Heart Rate Time Series data",
     )
     group.add_argument(
@@ -77,7 +111,7 @@ def parse_arguments():
         type=parse_date_range,
         nargs="?",
         const=(datetime.today().date(), None),
-        metavar="DATE[,DATE]",
+        metavar="DATE[,DATE]|RELATIVE",
         help="Show Active Zone Minutes (AZM) Time Series data",
     )
     group.add_argument(
@@ -86,7 +120,7 @@ def parse_arguments():
         type=parse_date_range,
         nargs="?",
         const=(datetime.today().date(), None),
-        metavar="DATE[,DATE]",
+        metavar="DATE[,DATE]|RELATIVE",
         help="Show Breathing Rate Summary data",
     )
     group.add_argument(

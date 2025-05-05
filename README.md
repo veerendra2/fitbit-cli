@@ -35,11 +35,12 @@ Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, 
 python -m pip install fitbit-cli
 ```
 
-2. Help
+2. See Help
 
 ```bash
 fitbit-cli -h
-usage: fitbit-cli [-h] [-i] [-s [DATE[,DATE]]] [-o [DATE[,DATE]]] [-e [DATE[,DATE]]] [-a [DATE[,DATE]]] [-u] [-v]
+usage: fitbit-cli [-h] [-i] [-s [DATE[,DATE]|RELATIVE]] [-o [DATE[,DATE]|RELATIVE]] [-e [DATE[,DATE]|RELATIVE]] [-a [DATE[,DATE]|RELATIVE]]
+                  [-b [DATE[,DATE]|RELATIVE]] [-u] [-v]
 
 Fitbit CLI -- Access your Fitbit data at your terminal.
 
@@ -49,17 +50,20 @@ options:
   -v, --version         Show fitbit-cli version
 
 APIs:
-  Specify date ranges (ISO 8601 format: YYYY-MM-DD) for the following arguments.
-  You can provide a single date or a range (start,end). If not provided, defaults to today's date.
+  Specify a date, date range (YYYY-MM-DD[,YYYY-MM-DD]), or relative date.
+  Relative dates: yesterday, last-week, last-month, last-N-days/weeks/months (e.g., last-2-days).
+  If not provided, defaults to today's date.
 
-  -s, --sleep [DATE[,DATE]]
+  -s, --sleep [DATE[,DATE]|RELATIVE]
                         Show sleep data
-  -o, --spo2 [DATE[,DATE]]
+  -o, --spo2 [DATE[,DATE]|RELATIVE]
                         Show SpO2 data
-  -e, --heart [DATE[,DATE]]
+  -e, --heart [DATE[,DATE]|RELATIVE]
                         Show Heart Rate Time Series data
-  -a, --active-zone [DATE[,DATE]]
+  -a, --active-zone [DATE[,DATE]|RELATIVE]
                         Show Active Zone Minutes (AZM) Time Series data
+  -b, --breathing-rate [DATE[,DATE]|RELATIVE]
+                        Show Breathing Rate Summary data
   -u, --show-user-profile
                         Show user profile data
 ```
@@ -80,19 +84,18 @@ APIs:
     fitbit-cli --init-auth
    ```
 
-   For a visual guide, see the Asciinema recording below
    [![asciicast](https://asciinema.org/a/696115.svg)](https://asciinema.org/a/696115)
 
 5. Start using it 😎
 
 ```bash
-$ fitbit-cli -s
-                                   Sleep Data Summary 😴
-┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
-┃ Date 📆    ┃ Deep Sleep 🛏 ┃ Light Sleep 💤 ┃ REM Sleep 🌙 ┃ Wake Time ⏰ ┃ Efficiency 💯 ┃
-┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
-│ 2024-12-25 │ 139 min      │ 190 min        │ 155 min      │ 54 min       │ 55%           │
-└────────────┴──────────────┴────────────────┴──────────────┴──────────────┴───────────────┘
+fitbit-cli -s
+                                            Sleep Data Summary 😴
+┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┓
+┃ Date 📆    ┃ Deep Sleep 🛏 ┃ Light Sleep 💤 ┃ REM Sleep 🌙 ┃ Wake Time ⏰ ┃ Efficiency 💯 ┃ Time in Bed 🕐 ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━┩
+│ 2025-05-03 │ 129 min      │ 271 min        │ 140 min      │ 66 min       │ 57%           │ 10.1 hr        │
+└────────────┴──────────────┴────────────────┴──────────────┴──────────────┴───────────────┴────────────────┘
 ```
 
 _**NOTE: The token is valid for only 8 hours, `fitbit-cli` automatically refreshes the token when it expires.**_
@@ -109,4 +112,6 @@ cd fitbit-cli
 python -m venv venv
 source venv/bin/activate
 python -m pip install -e .
+
+deactivate
 ```
