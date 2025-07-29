@@ -9,7 +9,7 @@
 Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, ❤️ heart rate, 🏋️‍♂️ activity levels, 🩸 SpO2, and more, all presented in a simple, easy-to-read table format!
 
 <p align="center">
-  <img alt="Fitbit logo", width="250" src="https://raw.githubusercontent.com/veerendra2/fitbit-cli/refs/heads/main/assets/Fitbit_Logo_White_RGB.jpg">
+  <img alt="Fitbit logo", width="350" src="https://raw.githubusercontent.com/veerendra2/fitbit-cli/refs/heads/main/assets/Fitbit_Logo_White_RGB.jpg">
 </p>
 
 [![asciicast](https://asciinema.org/a/696114.svg)](https://asciinema.org/a/696114)
@@ -40,7 +40,7 @@ python -m pip install fitbit-cli
 2. See Help
 
 ```bash
-fitbit-cli -h
+$ fitbit-cli -h
 usage: fitbit-cli [-h] [-i] [-s [DATE[,DATE]|RELATIVE]] [-o [DATE[,DATE]|RELATIVE]] [-e [DATE[,DATE]|RELATIVE]] [-a [DATE[,DATE]|RELATIVE]] [-b [DATE[,DATE]|RELATIVE]] [-u] [-d] [-v]
 
 Fitbit CLI -- Access your Fitbit data at your terminal.
@@ -56,17 +56,17 @@ APIs:
   If not provided, defaults to today's date.
 
   -s, --sleep [DATE[,DATE]|RELATIVE]
-                        Show sleep data.
+                        Show Sleep Log by Date Range.
   -o, --spo2 [DATE[,DATE]|RELATIVE]
-                        Show SpO2 data.
+                        Show SpO2 Summary by Interval.
   -e, --heart [DATE[,DATE]|RELATIVE]
-                        Show heart rate time series data.
+                        Show Heart Rate Time Series by Date Range.
   -a, --active-zone [DATE[,DATE]|RELATIVE]
-                        Show Active Zone Minutes (AZM) time series data.
+                        Show AZM Time Series by Interval.
   -b, --breathing-rate [DATE[,DATE]|RELATIVE]
-                        Show breathing rate summary data.
-  -u, --user-profile    Show user profile data.
-  -d, --devices         Show list of Fitbit devices paired to the account.
+                        Show Breathing Rate Summary by Interval.
+  -u, --user-profile    Show Profile.
+  -d, --devices         Show Devices.
 ```
 
 3. Register Fitbit App
