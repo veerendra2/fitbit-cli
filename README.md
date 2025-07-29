@@ -9,7 +9,7 @@
 Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, ❤️ heart rate, 🏋️‍♂️ activity levels, 🩸 SpO2, and more, all presented in a simple, easy-to-read table format!
 
 <p align="center">
-  <img alt="Fitbit logo", width="250" src="https://raw.githubusercontent.com/veerendra2/fitbit-cli/refs/heads/main/assets/Fitbit_Logo_White_RGB.jpg">
+  <img alt="Fitbit logo", width="350" src="https://raw.githubusercontent.com/veerendra2/fitbit-cli/refs/heads/main/assets/Fitbit_Logo_White_RGB.jpg">
 </p>
 
 [![asciicast](https://asciinema.org/a/696114.svg)](https://asciinema.org/a/696114)
@@ -18,14 +18,16 @@ Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, 
 
 > Only `GET` APIs are supported!
 
-| API                                                                                                                     | Status |
-| ----------------------------------------------------------------------------------------------------------------------- | ------ |
-| [User](https://dev.fitbit.com/build/reference/web-api/user/)                                                            | ✅     |
-| [Sleep](https://dev.fitbit.com/build/reference/web-api/sleep/)                                                          | ✅     |
-| [SpO2](https://dev.fitbit.com/build/reference/web-api/spo2/)                                                            | ✅     |
-| [Heart Rate Time Series](https://dev.fitbit.com/build/reference/web-api/heartrate-timeseries/)                          | ✅     |
-| [Active Zone Minutes (AZM) Time Series](https://dev.fitbit.com/build/reference/web-api/active-zone-minutes-timeseries/) | ✅     |
-| [Activity](https://dev.fitbit.com/build/reference/web-api/activity/)                                                    | ✅     |
+| API                                                                                                                                                     | Status |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| [Get Profile](https://dev.fitbit.com/build/reference/web-api/user/get-profile/)                                                                         | ✅     |
+| [Get Devices](https://dev.fitbit.com/build/reference/web-api/devices/get-devices/)                                                                      | ✅     |
+| [Get Sleep Log by Date Range](https://dev.fitbit.com/build/reference/web-api/sleep/get-sleep-log-by-date-range/)                                        | ✅     |
+| [Get SpO2 Summary by Interval](https://dev.fitbit.com/build/reference/web-api/spo2/get-spo2-summary-by-interval/)                                       | ✅     |
+| [Get Heart Rate Time Series by Date Range](https://dev.fitbit.com/build/reference/web-api/heartrate-timeseries/get-heartrate-timeseries-by-date-range/) | ✅     |
+| [Get AZM Time Series by Interval](https://dev.fitbit.com/build/reference/web-api/active-zone-minutes-timeseries/get-azm-timeseries-by-interval/)        | ✅     |
+| [Get Breathing Rate Summary by Interval](https://dev.fitbit.com/build/reference/web-api/breathing-rate/get-br-summary-by-interval/)                     | ✅     |
+| [Get Daily Activity Summary](https://dev.fitbit.com/build/reference/web-api/activity/get-daily-activity-summary/)                                       | ⏳     |
 
 ## Usage Guide
 
@@ -38,9 +40,8 @@ python -m pip install fitbit-cli
 2. See Help
 
 ```bash
-fitbit-cli -h
-usage: fitbit-cli [-h] [-i] [-s [DATE[,DATE]|RELATIVE]] [-o [DATE[,DATE]|RELATIVE]] [-e [DATE[,DATE]|RELATIVE]] [-a [DATE[,DATE]|RELATIVE]]
-                  [-b [DATE[,DATE]|RELATIVE]] [-u] [-v]
+$ fitbit-cli -h
+usage: fitbit-cli [-h] [-i] [-s [DATE[,DATE]|RELATIVE]] [-o [DATE[,DATE]|RELATIVE]] [-e [DATE[,DATE]|RELATIVE]] [-a [DATE[,DATE]|RELATIVE]] [-b [DATE[,DATE]|RELATIVE]] [-u] [-d] [-v]
 
 Fitbit CLI -- Access your Fitbit data at your terminal.
 
@@ -55,17 +56,17 @@ APIs:
   If not provided, defaults to today's date.
 
   -s, --sleep [DATE[,DATE]|RELATIVE]
-                        Show sleep data
+                        Show Sleep Log by Date Range.
   -o, --spo2 [DATE[,DATE]|RELATIVE]
-                        Show SpO2 data
+                        Show SpO2 Summary by Interval.
   -e, --heart [DATE[,DATE]|RELATIVE]
-                        Show Heart Rate Time Series data
+                        Show Heart Rate Time Series by Date Range.
   -a, --active-zone [DATE[,DATE]|RELATIVE]
-                        Show Active Zone Minutes (AZM) Time Series data
+                        Show AZM Time Series by Interval.
   -b, --breathing-rate [DATE[,DATE]|RELATIVE]
-                        Show Breathing Rate Summary data
-  -u, --show-user-profile
-                        Show user profile data
+                        Show Breathing Rate Summary by Interval.
+  -u, --user-profile    Show Profile.
+  -d, --devices         Show Devices.
 ```
 
 3. Register Fitbit App

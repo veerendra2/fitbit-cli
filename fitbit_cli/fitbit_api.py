@@ -79,6 +79,13 @@ class FitbitAPI:
         response = self.make_request("GET", url)
         return response.json()
 
+    def get_devices(self):
+        """Get Devices"""
+
+        url = "https://api.fitbit.com/1/user/-/devices.json"
+        response = self.make_request("GET", url)
+        return response.json()
+
     def get_sleep_log(self, start_date, end_date=None):
         """Get Sleep Logs by Date Range and Date"""
 
@@ -140,5 +147,12 @@ class FitbitAPI:
 
         date_range = f"{start_date}/{end_date}" if end_date else start_date
         url = f"https://api.fitbit.com/1/user/-/br/date/{date_range}/all.json"
+        response = self.make_request("GET", url)
+        return response.json()
+
+    def get_daily_activity_summary(self, start_date):
+        """Get Daily Activity Summary"""
+
+        url = f"https://api.fitbit.com/1/user/-/activities/date/{start_date}.json"
         response = self.make_request("GET", url)
         return response.json()

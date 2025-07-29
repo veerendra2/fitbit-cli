@@ -164,3 +164,32 @@ def display_breathing_rate(breathing_rate_data):
         )
 
     CONSOLE.print(table)
+
+
+def display_devices(devices):
+    """Devices list formatter"""
+
+    def format_mac(mac):
+        if mac == "N/A" or len(mac) % 2:
+            return mac
+        return ":".join(mac[i : i + 2] for i in range(0, len(mac), 2))
+
+    table = Table(title="Devices List :link:", show_header=True)
+
+    table.add_column("Battery Level :battery:")
+    table.add_column("Device Model :watch:")
+    table.add_column("Device Type :iphone:")
+    table.add_column("Last Sync Time :clock3:")
+    table.add_column("MAC Address :label:")
+
+    for device in devices:
+        mac_address = format_mac(str(device.get("mac", "N/A")))
+        table.add_row(
+            str(device.get("batteryLevel", "N/A")),
+            str(device.get("deviceVersion", "N/A")),
+            str(device.get("type", "N/A")),
+            str(device.get("lastSyncTime", "N/A")),
+            mac_address,
+        )
+
+    CONSOLE.print(table)
