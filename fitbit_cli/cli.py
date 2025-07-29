@@ -85,7 +85,7 @@ def parse_arguments():
         nargs="?",
         const=(datetime.today().date(), None),
         metavar="DATE[,DATE]|RELATIVE",
-        help="Show sleep data",
+        help="Show sleep data.",
     )
     group.add_argument(
         "-o",
@@ -94,7 +94,7 @@ def parse_arguments():
         nargs="?",
         const=(datetime.today().date(), None),
         metavar="DATE[,DATE]|RELATIVE",
-        help="Show SpO2 data",
+        help="Show SpO2 data.",
     )
     group.add_argument(
         "-e",
@@ -103,7 +103,7 @@ def parse_arguments():
         nargs="?",
         const=(datetime.today().date(), None),
         metavar="DATE[,DATE]|RELATIVE",
-        help="Show Heart Rate Time Series data",
+        help="Show heart rate time series data.",
     )
     group.add_argument(
         "-a",
@@ -112,7 +112,7 @@ def parse_arguments():
         nargs="?",
         const=(datetime.today().date(), None),
         metavar="DATE[,DATE]|RELATIVE",
-        help="Show Active Zone Minutes (AZM) Time Series data",
+        help="Show Active Zone Minutes (AZM) time series data.",
     )
     group.add_argument(
         "-b",
@@ -121,13 +121,19 @@ def parse_arguments():
         nargs="?",
         const=(datetime.today().date(), None),
         metavar="DATE[,DATE]|RELATIVE",
-        help="Show Breathing Rate Summary data",
+        help="Show breathing rate summary data.",
     )
     group.add_argument(
         "-u",
-        "--show-user-profile",
+        "--user-profile",
         action="store_true",
-        help="Show user profile data",
+        help="Show user profile data.",
+    )
+    group.add_argument(
+        "-d",
+        "--devices",
+        action="store_true",
+        help="Show list of Fitbit devices paired to the account.",
     )
 
     parser.add_argument(

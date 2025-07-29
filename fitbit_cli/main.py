@@ -27,8 +27,10 @@ def main():
     )
 
     with fmt.CONSOLE.status("[bold green]Fetching data...") as _:
-        if args.show_user_profile:
+        if args.user_profile:
             fmt.display_user_profile(fitbit.get_user_profile())
+        if args.devices:
+            fmt.display_devices(fitbit.get_devices())
         if args.sleep:
             fmt.display_sleep(fitbit.get_sleep_log(*args.sleep))
         if args.spo2:
