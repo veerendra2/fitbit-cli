@@ -5,6 +5,11 @@ on:
     paths:
       - "**/**"
 
+permissions:
+  contents: write
+  checks: write
+  pull-requests: write
+
 jobs:
   lint:
     name: Super Linter
@@ -50,21 +55,20 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          python3 -m pip install .
-          python3 -m pip install pytest pytest-cov
+          python -m pip install --upgrade pip
+          pip install flake8 pytest pytest-cov
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Build coverage file
         run: |
           pytest tests/ --cov=fitbit_cli --junitxml=/tmp/pytest.xml | tee /tmp/pytest-coverage.txt
 
+      - name: Build coverage file
+        run: |
+          pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=app tests/ | tee pytest-coverage.txt
+
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main
         with:
-          pytest-coverage-path: /tmp/pytest-coverage.txt
-          junitxml-path: /tmp/pytest.xml
-          title: Coverage Report
-          hide-report: false
-          create-new-comment: false
-          hide-comment: false
-          report-only-changed-files: false
-          junitxml-title: JUnit Xml Summary
+          pytest-coverage-path: ./pytest-coverage.txt
+          junitxml-path: ./pytest.xml
