@@ -40,8 +40,8 @@ python -m pip install fitbit-cli
 2. See Help
 
 ```bash
-$ fitbit-cli -h
-usage: fitbit-cli [-h] [-i] [-s [DATE[,DATE]|RELATIVE]] [-o [DATE[,DATE]|RELATIVE]] [-e [DATE[,DATE]|RELATIVE]] [-a [DATE[,DATE]|RELATIVE]] [-b [DATE[,DATE]|RELATIVE]] [-u] [-d] [-v]
+fitbit-cli -h
+usage: fitbit-cli [-h] [-i] [-s [DATE[,DATE]|RELATIVE]] [-o [DATE[,DATE]|RELATIVE]] [-e [DATE[,DATE]|RELATIVE]] [-a [DATE[,DATE]|RELATIVE]] [-b [DATE[,DATE]|RELATIVE]] [-t [DATE[,DATE]|RELATIVE]] [-u] [-d] [-v]
 
 Fitbit CLI -- Access your Fitbit data at your terminal.
 
@@ -65,6 +65,8 @@ APIs:
                         Show AZM Time Series by Interval.
   -b, --breathing-rate [DATE[,DATE]|RELATIVE]
                         Show Breathing Rate Summary by Interval.
+  -t, --activities [DATE[,DATE]|RELATIVE]
+                        Show Daily Activity Summary.
   -u, --user-profile    Show Profile.
   -d, --devices         Show Devices.
 ```

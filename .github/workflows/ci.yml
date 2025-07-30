@@ -34,38 +34,37 @@ jobs:
           VALIDATE_PYTHON_RUFF: false
           VALIDATE_YAML_PRETTIER: false
 
-  # pytest:
-  #   name: Pytests
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
+  pytest:
+    name: Pytests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v5
-  #       with:
-  #         python-version: "3.12"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
-  #     - name: Install Dependencies
-  #       run: |
-  #         python3 -m pip install .
-  #         python3 -m pip install pytest pytest-cov
+      - name: Install Dependencies
+        run: |
+          python3 -m pip install .
+          python3 -m pip install pytest pytest-cov
 
-  #     - name: Build coverage file
-  #       run: |
-  #         pytest --junitxml=/tmp/pytest.xml --cov-report=term-missing:skip-covered --cov=app tests/ | tee /tmp/pytest-coverage.txt
+      - name: Build coverage file
+        run: |
+          pytest tests/ --cov=fitbit_cli --junitxml=/tmp/pytest.xml | tee /tmp/pytest-coverage.txt
 
-  #     - name: Pytest coverage comment
-  #       uses: MishaKav/pytest-coverage-comment@main
-  #       with:
-  #         pytest-coverage-path: /tmp/pytest-coverage.txt
-  #         junitxml-path: /tmp/pytest.xml
-  #         title: Coverage Report - `${{ matrix.script_dir }}`
-  #         hide-report: false
-  #         create-new-comment: false
-  #         hide-comment: false
-  #         report-only-changed-files: false
-  #         unique-id-for-comment: ${{ matrix.script_dir }}
-  #         junitxml-title: JUnit Xml Summary - `${{ matrix.script_dir }}`
+      - name: Pytest coverage comment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: /tmp/pytest-coverage.txt
+          junitxml-path: /tmp/pytest.xml
+          title: Coverage Report
+          hide-report: false
+          create-new-comment: false
+          hide-comment: false
+          report-only-changed-files: false
+          junitxml-title: JUnit Xml Summary

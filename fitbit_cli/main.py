@@ -3,6 +3,8 @@
 Main Module
 """
 
+from datetime import datetime, timedelta
+
 from . import fitbit_setup as setup
 from . import formatter as fmt
 from .cli import parse_arguments
@@ -43,3 +45,18 @@ def main():
             fmt.display_breathing_rate(
                 fitbit.get_breathing_rate_summary(*args.breathing_rate)
             )
+        if args.activities:
+            start_date, end_date = args.activities
+            if end_date is None:
+                activity_data = [fitbit.get_daily_activity_summary(args.activities[0])]
+            else:
+                start = datetime.strptime(start_date, "%Y-%m-%d")
+                end = datetime.strptime(end_date, "%Y-%m-%d")
+                activity_data = [
+                    fitbit.get_daily_activity_summary(
+                        (start + timedelta(days=i)).strftime("%Y-%m-%d")
+                    )
+                    for i in range((end - start).days + 1)
+                ]
+
+            fmt.display_activity(activity_data)
