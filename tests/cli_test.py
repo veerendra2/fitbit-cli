@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
+"""
+CLI Tests
+"""
+
 import os
 import sys
 import unittest
-from datetime import datetime, timedelta
+from datetime import datetime
 from unittest.mock import patch
 
 # Add the parent directory to sys.path to make imports work
 sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 
+# pylint: disable=C0413
 from fitbit_cli.cli import _get_date_range, _parse_relative_dates, parse_date_range
 
 
