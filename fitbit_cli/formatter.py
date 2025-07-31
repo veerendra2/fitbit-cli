@@ -13,7 +13,11 @@ def display_user_profile(user_data):
 
     user = user_data["user"]
     height_unit = "cm" if user["heightUnit"] == "METRIC" else "in"
-    weight_unit = "kg" if user["weightUnit"] == "METRIC" else "lb"
+    weight_unit = "kg"
+    if user["weightUnit"] == "UK":
+        weight_unit = "stone"
+    elif user["weightUnit"] == "US":
+        weight_unit = "pounds"
 
     table = Table(title=f"Hello, {user['displayName']} :wave:", show_header=False)
 
@@ -104,7 +108,7 @@ def display_heart_data(heart_data):
         zones_table.add_column("Min :arrow_down:")
         zones_table.add_column("Max :arrow_up:")
         zones_table.add_column("Minutes :hourglass:")
-        zones_table.add_column("Calories Out :fire:")
+        zones_table.add_column("Calories Out (kcal) :fire:")
 
         for zone in value.get("heartRateZones", []):
             zones_table.add_row(
@@ -195,15 +199,17 @@ def display_devices(devices):
     CONSOLE.print(table)
 
 
-def display_activity(activity_data):
+def display_activity(activity_data, unit_system):
     """Activity data formatter"""
+
+    dis_unit = "km"
+    if unit_system == "US":
+        dis_unit = "miles"
 
     table = Table(title="Daily Activities :runner:", show_header=True)
 
     table.add_column("Date :calendar:")
     table.add_column("Activities :clipboard:")
-
-    activity_date = None
 
     for activity_day in activity_data:
         activity_table = Table(show_header=True, header_style="bold magenta")
@@ -212,21 +218,20 @@ def display_activity(activity_data):
         activity_table.add_column("Description :memo:")
         activity_table.add_column("Distance :straight_ruler:")
         activity_table.add_column("Steps :footprints:")
-        activity_table.add_column("Calories :fire:")
+        activity_table.add_column("Calories (kcal) :fire:")
         activity_table.add_column("Duration :hourglass:")
 
         for activity in activity_day.get("activities", []):
             duration_min = activity.get("duration", 0) / 60000
-            activity_date = activity.get("startDate")
             activity_table.add_row(
-                f"{activity.get('startDate', 'N/A')} {activity.get('startTime', '')}",
+                activity.get("startTime", ""),
                 activity.get("name", "N/A"),
                 activity.get("description", "N/A"),
-                f"{activity.get('distance', 'N/A')} km",
+                f"{activity.get('distance', 'N/A')} {dis_unit}",
                 str(activity.get("steps", "N/A")),
                 str(activity.get("calories", "N/A")),
                 f"{duration_min:.1f} min",
             )
-        table.add_row(activity_date, activity_table)
+        table.add_row(activity_day.get("date", ""), activity_table)
 
     CONSOLE.print(table)

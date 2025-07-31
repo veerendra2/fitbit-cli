@@ -47,16 +47,30 @@ def main():
             )
         if args.activities:
             start_date, end_date = args.activities
+            activity_data = []
+
+            # Get unit system from profile
+            unit_system = (
+                fitbit.get_user_profile().get("user", "").get("distanceUnit", "METRIC")
+            )
+
+            # 'Get Daily Activity Summary' API only accepts single date
+            # So we either fetch one date or iterate through a range
             if end_date is None:
-                activity_data = [fitbit.get_daily_activity_summary(args.activities[0])]
+                data = fitbit.get_daily_activity_summary(start_date)
+                data["date"] = str(start_date)
+                activity_data = [data]
             else:
                 start = datetime.strptime(start_date, "%Y-%m-%d")
                 end = datetime.strptime(end_date, "%Y-%m-%d")
                 activity_data = [
-                    fitbit.get_daily_activity_summary(
-                        (start + timedelta(days=i)).strftime("%Y-%m-%d")
-                    )
+                    {
+                        **fitbit.get_daily_activity_summary(
+                            (start + timedelta(days=i)).strftime("%Y-%m-%d")
+                        ),
+                        "date": (start + timedelta(days=i)).strftime("%Y-%m-%d"),
+                    }
                     for i in range((end - start).days + 1)
                 ]
 
-            fmt.display_activity(activity_data)
+            fmt.display_activity(activity_data, unit_system)
