@@ -12,7 +12,7 @@ Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, 
   <img alt="Fitbit logo", width="350" src="https://raw.githubusercontent.com/veerendra2/fitbit-cli/refs/heads/main/assets/Fitbit_Logo_White_RGB.jpg">
 </p>
 
-[![asciicast](https://asciinema.org/a/696114.svg)](https://asciinema.org/a/696114)
+[![asciicast](https://asciinema.org/a/732208.svg)](https://asciinema.org/a/732208)
 
 ## Supported Web APIs
 

@@ -4,6 +4,7 @@ Json Data Formatter
 """
 from rich.console import Console
 from rich.table import Table
+from rich.text import Text
 
 CONSOLE = Console()
 
@@ -215,7 +216,7 @@ def display_activity(activity_data, unit_system):
         activity_table = Table(show_header=True, header_style="bold magenta")
         activity_table.add_column("Start Time :alarm_clock:")
         activity_table.add_column("Name :running_shirt_with_sash:")
-        activity_table.add_column("Description :memo:")
+        activity_table.add_column("Description :memo:", width=30)
         activity_table.add_column("Distance :straight_ruler:")
         activity_table.add_column("Steps :footprints:")
         activity_table.add_column("Calories (kcal) :fire:")
@@ -226,7 +227,7 @@ def display_activity(activity_data, unit_system):
             activity_table.add_row(
                 activity.get("startTime", ""),
                 activity.get("name", "N/A"),
-                activity.get("description", "N/A"),
+                Text(activity.get("description", "N/A"), overflow="fold"),
                 f"{activity.get('distance', 'N/A')} {dis_unit}",
                 str(activity.get("steps", "N/A")),
                 str(activity.get("calories", "N/A")),
