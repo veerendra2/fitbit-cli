@@ -5,6 +5,11 @@ on:
     paths:
       - "**/**"
 
+permissions:
+  contents: write
+  checks: write
+  pull-requests: write
+
 jobs:
   lint:
     name: Super Linter
@@ -33,39 +38,38 @@ jobs:
           VALIDATE_PYTHON_PYINK: false
           VALIDATE_PYTHON_RUFF: false
           VALIDATE_YAML_PRETTIER: false
+          VALIDATE_SHELL_SHFMT: false
 
-  # pytest:
-  #   name: Pytests
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
+  pytest:
+    name: Pytests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v5
-  #       with:
-  #         python-version: "3.12"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
-  #     - name: Install Dependencies
-  #       run: |
-  #         python3 -m pip install .
-  #         python3 -m pip install pytest pytest-cov
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest pytest-cov
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-  #     - name: Build coverage file
-  #       run: |
-  #         pytest --junitxml=/tmp/pytest.xml --cov-report=term-missing:skip-covered --cov=app tests/ | tee /tmp/pytest-coverage.txt
+      - name: Build coverage file
+        run: |
+          pytest tests/ --cov=fitbit_cli --junitxml=/tmp/pytest.xml | tee /tmp/pytest-coverage.txt
 
-  #     - name: Pytest coverage comment
-  #       uses: MishaKav/pytest-coverage-comment@main
-  #       with:
-  #         pytest-coverage-path: /tmp/pytest-coverage.txt
-  #         junitxml-path: /tmp/pytest.xml
-  #         title: Coverage Report - `${{ matrix.script_dir }}`
-  #         hide-report: false
-  #         create-new-comment: false
-  #         hide-comment: false
-  #         report-only-changed-files: false
-  #         unique-id-for-comment: ${{ matrix.script_dir }}
-  #         junitxml-title: JUnit Xml Summary - `${{ matrix.script_dir }}`
+      - name: Build coverage file
+        run: |
+          pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=app tests/ | tee pytest-coverage.txt
+
+      - name: Pytest coverage comment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: ./pytest-coverage.txt
+          junitxml-path: ./pytest.xml

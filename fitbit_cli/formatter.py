@@ -4,6 +4,7 @@ Json Data Formatter
 """
 from rich.console import Console
 from rich.table import Table
+from rich.text import Text
 
 CONSOLE = Console()
 
@@ -13,7 +14,11 @@ def display_user_profile(user_data):
 
     user = user_data["user"]
     height_unit = "cm" if user["heightUnit"] == "METRIC" else "in"
-    weight_unit = "kg" if user["weightUnit"] == "METRIC" else "lb"
+    weight_unit = "kg"
+    if user["weightUnit"] == "UK":
+        weight_unit = "stone"
+    elif user["weightUnit"] == "US":
+        weight_unit = "pounds"
 
     table = Table(title=f"Hello, {user['displayName']} :wave:", show_header=False)
 
@@ -104,7 +109,7 @@ def display_heart_data(heart_data):
         zones_table.add_column("Min :arrow_down:")
         zones_table.add_column("Max :arrow_up:")
         zones_table.add_column("Minutes :hourglass:")
-        zones_table.add_column("Calories Out :fire:")
+        zones_table.add_column("Calories Out (kcal) :fire:")
 
         for zone in value.get("heartRateZones", []):
             zones_table.add_row(
@@ -176,20 +181,58 @@ def display_devices(devices):
 
     table = Table(title="Devices List :link:", show_header=True)
 
-    table.add_column("Battery Level :battery:")
-    table.add_column("Device Model :watch:")
-    table.add_column("Device Type :iphone:")
+    table.add_column("Battery % :battery:")
+    table.add_column("Device :watch:")
+    table.add_column("Type :iphone:")
     table.add_column("Last Sync Time :clock3:")
     table.add_column("MAC Address :label:")
 
     for device in devices:
         mac_address = format_mac(str(device.get("mac", "N/A")))
         table.add_row(
-            str(device.get("batteryLevel", "N/A")),
+            f"{str(device.get("batteryLevel", "N/A"))}%",
             str(device.get("deviceVersion", "N/A")),
             str(device.get("type", "N/A")),
             str(device.get("lastSyncTime", "N/A")),
             mac_address,
         )
+
+    CONSOLE.print(table)
+
+
+def display_activity(activity_data, unit_system):
+    """Activity data formatter"""
+
+    dis_unit = "km"
+    if unit_system == "US":
+        dis_unit = "miles"
+
+    table = Table(title="Daily Activities :runner:", show_header=True)
+
+    table.add_column("Date :calendar:")
+    table.add_column("Activities :clipboard:")
+
+    for activity_day in activity_data:
+        activity_table = Table(show_header=True, header_style="bold magenta")
+        activity_table.add_column("Start Time :alarm_clock:")
+        activity_table.add_column("Name :running_shirt_with_sash:")
+        activity_table.add_column("Description :memo:", width=30)
+        activity_table.add_column("Distance :straight_ruler:")
+        activity_table.add_column("Steps :footprints:")
+        activity_table.add_column("Calories (kcal) :fire:")
+        activity_table.add_column("Duration :hourglass:")
+
+        for activity in activity_day.get("activities", []):
+            duration_min = activity.get("duration", 0) / 60000
+            activity_table.add_row(
+                activity.get("startTime", ""),
+                activity.get("name", "N/A"),
+                Text(activity.get("description", "N/A"), overflow="fold"),
+                f"{activity.get('distance', 'N/A')} {dis_unit}",
+                str(activity.get("steps", "N/A")),
+                str(activity.get("calories", "N/A")),
+                f"{duration_min:.1f} min",
+            )
+        table.add_row(activity_day.get("date", ""), activity_table)
 
     CONSOLE.print(table)

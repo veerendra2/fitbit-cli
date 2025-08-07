@@ -12,7 +12,7 @@ Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, 
   <img alt="Fitbit logo", width="350" src="https://raw.githubusercontent.com/veerendra2/fitbit-cli/refs/heads/main/assets/Fitbit_Logo_White_RGB.jpg">
 </p>
 
-[![asciicast](https://asciinema.org/a/696114.svg)](https://asciinema.org/a/696114)
+[![asciicast](https://asciinema.org/a/732208.svg)](https://asciinema.org/a/732208)
 
 ## Supported Web APIs
 
@@ -27,7 +27,7 @@ Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, 
 | [Get Heart Rate Time Series by Date Range](https://dev.fitbit.com/build/reference/web-api/heartrate-timeseries/get-heartrate-timeseries-by-date-range/) | ✅     |
 | [Get AZM Time Series by Interval](https://dev.fitbit.com/build/reference/web-api/active-zone-minutes-timeseries/get-azm-timeseries-by-interval/)        | ✅     |
 | [Get Breathing Rate Summary by Interval](https://dev.fitbit.com/build/reference/web-api/breathing-rate/get-br-summary-by-interval/)                     | ✅     |
-| [Get Daily Activity Summary](https://dev.fitbit.com/build/reference/web-api/activity/get-daily-activity-summary/)                                       | ⏳     |
+| [Get Daily Activity Summary](https://dev.fitbit.com/build/reference/web-api/activity/get-daily-activity-summary/)                                       | ✅     |
 
 ## Usage Guide
 
@@ -40,8 +40,8 @@ python -m pip install fitbit-cli
 2. See Help
 
 ```bash
-$ fitbit-cli -h
-usage: fitbit-cli [-h] [-i] [-s [DATE[,DATE]|RELATIVE]] [-o [DATE[,DATE]|RELATIVE]] [-e [DATE[,DATE]|RELATIVE]] [-a [DATE[,DATE]|RELATIVE]] [-b [DATE[,DATE]|RELATIVE]] [-u] [-d] [-v]
+fitbit-cli -h
+usage: fitbit-cli [-h] [-i] [-s [DATE[,DATE]|RELATIVE]] [-o [DATE[,DATE]|RELATIVE]] [-e [DATE[,DATE]|RELATIVE]] [-a [DATE[,DATE]|RELATIVE]] [-b [DATE[,DATE]|RELATIVE]] [-t [DATE[,DATE]|RELATIVE]] [-u] [-d] [-v]
 
 Fitbit CLI -- Access your Fitbit data at your terminal.
 
@@ -65,6 +65,8 @@ APIs:
                         Show AZM Time Series by Interval.
   -b, --breathing-rate [DATE[,DATE]|RELATIVE]
                         Show Breathing Rate Summary by Interval.
+  -t, --activities [DATE[,DATE]|RELATIVE]
+                        Show Daily Activity Summary.
   -u, --user-profile    Show Profile.
   -d, --devices         Show Devices.
 ```
