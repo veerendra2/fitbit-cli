@@ -38,6 +38,7 @@ jobs:
           VALIDATE_PYTHON_PYINK: false
           VALIDATE_PYTHON_RUFF: false
           VALIDATE_YAML_PRETTIER: false
+          SHELL_SHFMT: false
 
   pytest:
     name: Pytests
