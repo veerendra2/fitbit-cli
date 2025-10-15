@@ -2,7 +2,8 @@
 
 [![Release](https://github.com/veerendra2/fitbit-cli/actions/workflows/release.yml/badge.svg)](https://github.com/veerendra2/fitbit-cli/actions/workflows/release.yml) [![PyPI - Status](https://img.shields.io/pypi/status/fitbit-cli)
 ](https://pypi.org/project/fitbit-cli/) [![PyPI - Version](https://img.shields.io/pypi/v/fitbit-cli)
-](https://pypi.org/project/fitbit-cli/)
+](https://pypi.org/project/fitbit-cli/) [![ClickPy Stats](https://img.shields.io/badge/ClickPy%20Stats-A5951E)
+](https://clickpy.clickhouse.com/dashboard/fitbit-cli)
 
 > This is not an official Fitbit CLI
 
