@@ -42,7 +42,7 @@ jobs:
 
   pytest:
     name: Pytests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6
