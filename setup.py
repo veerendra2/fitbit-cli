@@ -48,7 +48,7 @@ setup(
     ],
     install_requires=[
         "requests==2.32.5",
-        "rich==14.3.2",
+        "rich==14.3.3",
     ],
     python_requires=">=3.9",
     entry_points={"console_scripts": ["fitbit-cli = fitbit_cli.main:main"]},
