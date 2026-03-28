@@ -146,6 +146,13 @@ def parse_arguments():
     )
 
     parser.add_argument(
+        "-j",
+        "--raw-json",
+        action="store_true",
+        help="Output raw JSON from the Fitbit API (machine-readable, no tables or spinner).",
+    )
+
+    parser.add_argument(
         "-v",
         "--version",
         action="version",
@@ -155,7 +162,10 @@ def parse_arguments():
 
     args = parser.parse_args()
 
-    if not any(vars(args).values()):
+    data_args = {
+        k: v for k, v in vars(args).items() if k not in ("raw_json", "version")
+    }
+    if not any(data_args.values()):
         parser.error("No arguments provided. At least one argument is required.")
 
     return args
