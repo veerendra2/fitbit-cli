@@ -29,6 +29,50 @@ def collect_activities(fitbit, args):
     ]
 
 
+def json_display(fitbit, args):
+    """Fetch data and render each requested endpoint as a single pretty JSON object to stdout."""
+    result = {}
+
+    if args.user_profile:
+        result.update(fmt.display_user_profile(fitbit.get_user_profile(), as_json=True))
+    if args.devices:
+        result.update(fmt.display_devices(fitbit.get_devices(), as_json=True))
+    if args.sleep:
+        result.update(
+            fmt.display_sleep(fitbit.get_sleep_log(*args.sleep), as_json=True)
+        )
+    if args.spo2:
+        result.update(
+            fmt.display_spo2(fitbit.get_spo2_summary(*args.spo2), as_json=True)
+        )
+    if args.heart:
+        result.update(
+            fmt.display_heart_data(
+                fitbit.get_heart_rate_time_series(*args.heart), as_json=True
+            )
+        )
+    if args.active_zone:
+        result.update(
+            fmt.display_azm_time_series(
+                fitbit.get_azm_time_series(*args.active_zone), as_json=True
+            )
+        )
+    if args.breathing_rate:
+        result.update(
+            fmt.display_breathing_rate(
+                fitbit.get_breathing_rate_summary(*args.breathing_rate), as_json=True
+            )
+        )
+    if args.activities:
+        activity_data = collect_activities(fitbit, args)
+        unit_system = (
+            fitbit.get_user_profile().get("user", "").get("distanceUnit", "METRIC")
+        )
+        result.update(fmt.display_activity(activity_data, unit_system, as_json=True))
+
+    print(json.dumps(result, indent=2))
+
+
 def raw_json_display(fitbit, args):
     """Collect API responses and print compact JSON to stdout."""
     result = {}

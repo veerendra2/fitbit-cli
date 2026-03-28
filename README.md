@@ -5,9 +5,11 @@
 ](https://pypi.org/project/fitbit-cli/) [![ClickPy Stats](https://img.shields.io/badge/ClickPy%20Stats-A5951E)
 ](https://clickpy.clickhouse.com/dashboard/fitbit-cli)
 
-> This is not an official Fitbit CLI
+> _This is not an official Fitbit CLI_
 
 Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, ❤️ heart rate, 🏋️‍♂️ activity levels, 🩸 SpO2, and more, all presented in a simple, easy-to-read table format!
+
+> **AI agent-friendly** 🤖 — since v1.6.0, use `--json` for minimized, token-efficient JSON output or `--raw-json` for the full Fitbit API response. No spinners, pure JSON.
 
 <p align="center">
   <img alt="Fitbit logo", width="350" src="https://raw.githubusercontent.com/veerendra2/fitbit-cli/refs/heads/main/assets/Fitbit_Logo_White_RGB.jpg">
@@ -42,13 +44,16 @@ python -m pip install fitbit-cli
 
 ```bash
 fitbit-cli -h
-usage: fitbit-cli [-h] [-i] [-s [DATE[,DATE]|RELATIVE]] [-o [DATE[,DATE]|RELATIVE]] [-e [DATE[,DATE]|RELATIVE]] [-a [DATE[,DATE]|RELATIVE]] [-b [DATE[,DATE]|RELATIVE]] [-t [DATE[,DATE]|RELATIVE]] [-u] [-d] [-v]
+usage: fitbit-cli [-h] [-i] [-s [DATE[,DATE]|RELATIVE]] [-o [DATE[,DATE]|RELATIVE]] [-e [DATE[,DATE]|RELATIVE]] [-a [DATE[,DATE]|RELATIVE]] [-b [DATE[,DATE]|RELATIVE]]
+                  [-t [DATE[,DATE]|RELATIVE]] [-u] [-d] [-j] [-r] [-v]
 
 Fitbit CLI -- Access your Fitbit data at your terminal.
 
 options:
   -h, --help            show this help message and exit
   -i, --init-auth       Initialize Fitbit iterative authentication setup
+  -j, --json            Output table data as pretty JSON.
+  -r, --raw-json        Output raw JSON from the Fitbit API.
   -v, --version         Show fitbit-cli version
 
 APIs:

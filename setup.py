@@ -41,8 +41,7 @@ setup(
         "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.14",
         "Programming Language :: Python",
         "Topic :: Utilities",
     ],
@@ -50,6 +49,6 @@ setup(
         "requests==2.32.5",
         "rich==14.3.3",
     ],
-    python_requires=">=3.10",
+    python_requires=">=3.12",
     entry_points={"console_scripts": ["fitbit-cli = fitbit_cli.main:main"]},
 )

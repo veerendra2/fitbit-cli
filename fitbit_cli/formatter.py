@@ -2,6 +2,7 @@
 """
 Json Data Formatter
 """
+
 from rich.console import Console
 from rich.table import Table
 from rich.text import Text
@@ -9,7 +10,7 @@ from rich.text import Text
 CONSOLE = Console()
 
 
-def display_user_profile(user_data):
+def display_user_profile(user_data, as_json=False):
     """User data formatter"""
 
     user = user_data["user"]
@@ -19,6 +20,22 @@ def display_user_profile(user_data):
         weight_unit = "stone"
     elif user["weightUnit"] == "US":
         weight_unit = "pounds"
+
+    if as_json:
+        return {
+            "user_profile": {
+                "first_name": user["firstName"],
+                "last_name": user["lastName"],
+                "date_of_birth": user["dateOfBirth"],
+                "age": user["age"],
+                "gender": user["gender"],
+                "height": f"{user['height']:.1f} {height_unit}",
+                "weight": f"{user['weight']:.1f} {weight_unit}",
+                "average_daily_steps": user["averageDailySteps"],
+                "member_since": user["memberSince"],
+                "timezone": user["timezone"],
+            }
+        }
 
     table = Table(title=f"Hello, {user['displayName']} :wave:", show_header=False)
 
@@ -31,16 +48,39 @@ def display_user_profile(user_data):
     table.add_row(":hourglass_flowing_sand: Age", str(user["age"]))
     table.add_row(":restroom: Gender", user["gender"])
     table.add_row(":straight_ruler: Height", f"{user['height']:.1f} {height_unit}")
-    table.add_row(":weight_lifter: Weight", f"{user['weight']:.1f} {weight_unit}")
+    table.add_row(":weight_lifter:  Weight", f"{user['weight']:.1f} {weight_unit}")
     table.add_row(":footprints: Average Daily Steps", str(user["averageDailySteps"]))
     table.add_row(":calendar: Member Since", user["memberSince"])
     table.add_row(":clock1: Time Zone", user["timezone"])
 
     CONSOLE.print(table)
+    return None
 
 
-def display_sleep(sleep_data):
+def display_sleep(sleep_data, as_json=False):
     """Sleep data formatter"""
+
+    if as_json:
+        return {
+            "sleep": [
+                {
+                    "date": s["dateOfSleep"],
+                    "deep_minutes": s["levels"]["summary"]
+                    .get("deep", {})
+                    .get("minutes"),
+                    "light_minutes": s["levels"]["summary"]
+                    .get("light", {})
+                    .get("minutes"),
+                    "rem_minutes": s["levels"]["summary"].get("rem", {}).get("minutes"),
+                    "wake_minutes": s["levels"]["summary"]
+                    .get("wake", {})
+                    .get("minutes"),
+                    "efficiency": s["efficiency"],
+                    "time_in_bed_hours": round(s["timeInBed"] / 60, 1),
+                }
+                for s in sleep_data["sleep"]
+            ]
+        }
 
     table = Table(title="Sleep Data Summary :sleeping:", show_header=True)
 
@@ -64,10 +104,27 @@ def display_sleep(sleep_data):
         )
 
     CONSOLE.print(table)
+    return None
 
 
-def display_spo2(spo2_data):
+def display_spo2(spo2_data, as_json=False):
     """SpO2 data formatter"""
+
+    if isinstance(spo2_data, dict):
+        spo2_data = [spo2_data]
+
+    if as_json:
+        return {
+            "spo2": [
+                {
+                    "date": s.get("dateTime"),
+                    "min": s.get("value", {}).get("min"),
+                    "avg": s.get("value", {}).get("avg"),
+                    "max": s.get("value", {}).get("max"),
+                }
+                for s in spo2_data
+            ]
+        }
 
     table = Table(title="SpO2 Data Summary :heart:", show_header=True)
 
@@ -75,9 +132,6 @@ def display_spo2(spo2_data):
     table.add_column("Minimum :red_circle:")
     table.add_column("Average :blue_circle:")
     table.add_column("Maximum :green_circle:")
-
-    if isinstance(spo2_data, dict):
-        spo2_data = [spo2_data]
 
     for spo2 in spo2_data:
         table.add_row(
@@ -88,10 +142,36 @@ def display_spo2(spo2_data):
         )
 
     CONSOLE.print(table)
+    return None
 
 
-def display_heart_data(heart_data):
+def display_heart_data(heart_data, as_json=False):
     """Heart data formatter"""
+
+    if as_json:
+        return {
+            "heart": [
+                {
+                    "date": a.get("dateTime"),
+                    "resting_heart_rate": a.get("value", {}).get("restingHeartRate"),
+                    "zones": [
+                        {
+                            "name": z.get("name"),
+                            "min": z.get("min"),
+                            "max": z.get("max"),
+                            "minutes": z.get("minutes"),
+                            "calories_out": (
+                                round(z["caloriesOut"], 2)
+                                if isinstance(z.get("caloriesOut"), (int, float))
+                                else None
+                            ),
+                        }
+                        for z in a.get("value", {}).get("heartRateZones", [])
+                    ],
+                }
+                for a in heart_data.get("activities-heart", [])
+            ]
+        }
 
     table = Table(title="Heart Rate Time Series :heart:", show_header=True)
 
@@ -123,14 +203,29 @@ def display_heart_data(heart_data):
                     else "N/A"
                 ),
             )
-
         table.add_row(date, str(resting_heart_rate), zones_table)
-
     CONSOLE.print(table)
+    return None
 
 
-def display_azm_time_series(azm_data):
+def display_azm_time_series(azm_data, as_json=False):
     """AZM Time Series data formatter"""
+
+    if as_json:
+        return {
+            "active_zone": [
+                {
+                    "date": a.get("dateTime"),
+                    "active_zone_minutes": a.get("value", {}).get("activeZoneMinutes"),
+                    "fat_burn_minutes": a.get("value", {}).get(
+                        "fatBurnActiveZoneMinutes"
+                    ),
+                    "cardio_minutes": a.get("value", {}).get("cardioActiveZoneMinutes"),
+                    "peak_minutes": a.get("value", {}).get("peakActiveZoneMinutes"),
+                }
+                for a in azm_data.get("activities-active-zone-minutes", [])
+            ]
+        }
 
     table = Table(title="AZM Time Series :runner:", show_header=True)
 
@@ -152,10 +247,22 @@ def display_azm_time_series(azm_data):
         )
 
     CONSOLE.print(table)
+    return None
 
 
-def display_breathing_rate(breathing_rate_data):
+def display_breathing_rate(breathing_rate_data, as_json=False):
     """Breathing Rate data formatter"""
+
+    if as_json:
+        return {
+            "breathing_rate": [
+                {
+                    "date": br.get("dateTime"),
+                    "breathing_rate": br.get("value", {}).get("breathingRate"),
+                }
+                for br in breathing_rate_data.get("br", [])
+            ]
+        }
 
     table = Table(title="Breathing Rate Summary 🫁", show_header=True)
 
@@ -169,15 +276,30 @@ def display_breathing_rate(breathing_rate_data):
         )
 
     CONSOLE.print(table)
+    return None
 
 
-def display_devices(devices):
+def display_devices(devices, as_json=False):
     """Devices list formatter"""
 
     def format_mac(mac):
         if mac == "N/A" or len(mac) % 2:
             return mac
         return ":".join(mac[i : i + 2] for i in range(0, len(mac), 2))
+
+    if as_json:
+        return {
+            "devices": [
+                {
+                    "battery_level": device.get("batteryLevel"),
+                    "device": device.get("deviceVersion"),
+                    "type": device.get("type"),
+                    "last_sync_time": device.get("lastSyncTime"),
+                    "mac_address": format_mac(str(device.get("mac", "N/A"))),
+                }
+                for device in devices
+            ]
+        }
 
     table = Table(title="Devices List :link:", show_header=True)
 
@@ -190,7 +312,7 @@ def display_devices(devices):
     for device in devices:
         mac_address = format_mac(str(device.get("mac", "N/A")))
         table.add_row(
-            f"{str(device.get("batteryLevel", "N/A"))}%",
+            f"{str(device.get('batteryLevel', 'N/A'))}%",
             str(device.get("deviceVersion", "N/A")),
             str(device.get("type", "N/A")),
             str(device.get("lastSyncTime", "N/A")),
@@ -198,14 +320,35 @@ def display_devices(devices):
         )
 
     CONSOLE.print(table)
+    return None
 
 
-def display_activity(activity_data, unit_system):
+def display_activity(activity_data, unit_system, as_json=False):
     """Activity data formatter"""
 
-    dis_unit = "km"
-    if unit_system == "US":
-        dis_unit = "miles"
+    dis_unit = "km" if unit_system != "US" else "miles"
+
+    if as_json:
+        return {
+            "activities": [
+                {
+                    "date": day.get("date"),
+                    "activities": [
+                        {
+                            "start_time": a.get("startTime"),
+                            "name": a.get("name"),
+                            "description": a.get("description"),
+                            "distance": f"{a.get('distance')} {dis_unit}",
+                            "steps": a.get("steps"),
+                            "calories": a.get("calories"),
+                            "duration_minutes": round(a.get("duration", 0) / 60000, 1),
+                        }
+                        for a in day.get("activities", [])
+                    ],
+                }
+                for day in activity_data
+            ]
+        }
 
     table = Table(title="Daily Activities :runner:", show_header=True)
 
@@ -236,3 +379,4 @@ def display_activity(activity_data, unit_system):
         table.add_row(activity_day.get("date", ""), activity_table)
 
     CONSOLE.print(table)
+    return None

@@ -72,6 +72,20 @@ def parse_arguments():
         help="Initialize Fitbit iterative authentication setup",
     )
 
+    parser.add_argument(
+        "-j",
+        "--json",
+        action="store_true",
+        help="Output table data as pretty JSON.",
+    )
+
+    parser.add_argument(
+        "-r",
+        "--raw-json",
+        action="store_true",
+        help="Output raw JSON from the Fitbit API.",
+    )
+
     group = parser.add_argument_group(
         "APIs",
         "Specify a date, date range (YYYY-MM-DD[,YYYY-MM-DD]), or relative date.\n"
@@ -146,13 +160,6 @@ def parse_arguments():
     )
 
     parser.add_argument(
-        "-j",
-        "--raw-json",
-        action="store_true",
-        help="Output raw JSON from the Fitbit API (machine-readable, no tables or spinner).",
-    )
-
-    parser.add_argument(
         "-v",
         "--version",
         action="version",
@@ -163,8 +170,9 @@ def parse_arguments():
     args = parser.parse_args()
 
     data_args = {
-        k: v for k, v in vars(args).items() if k not in ("raw_json", "version")
+        k: v for k, v in vars(args).items() if k not in ("json", "raw_json", "version")
     }
+
     if not any(data_args.values()):
         parser.error("No arguments provided. At least one argument is required.")
 

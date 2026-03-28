@@ -28,5 +28,7 @@ def main():
 
     if args.raw_json:
         output.raw_json_display(fitbit, args)
+    elif args.json:
+        output.json_display(fitbit, args)
     else:
         output.table_display(fitbit, args)

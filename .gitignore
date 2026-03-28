@@ -163,3 +163,5 @@ cython_debug/
 
 *.json
 .direnv
+.ruff_cache
+.vscode
