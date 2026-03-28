@@ -13,7 +13,12 @@ from unittest.mock import patch
 sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 
 # pylint: disable=C0413
-from fitbit_cli.cli import _get_date_range, _parse_relative_dates, parse_date_range
+from fitbit_cli.cli import (
+    _get_date_range,
+    _parse_relative_dates,
+    parse_arguments,
+    parse_date_range,
+)
 
 
 class TestCLIDateFunctions(unittest.TestCase):
@@ -147,6 +152,32 @@ class TestCLIDateFunctions(unittest.TestCase):
         # Test invalid date format
         with self.assertRaises(ValueError):
             parse_date_range("invalid-date-format")
+
+    @patch("sys.argv", ["fitbit-cli", "--json"])
+    def test_json_flag_alone_raises_error(self):
+        """Test that --json alone (without a data flag) triggers the no-arguments error."""
+        with self.assertRaises(SystemExit):
+            parse_arguments()
+
+    @patch("sys.argv", ["fitbit-cli", "--raw-json"])
+    def test_raw_json_flag_alone_raises_error(self):
+        """Test that --raw-json alone (without a data flag) triggers the no-arguments error."""
+        with self.assertRaises(SystemExit):
+            parse_arguments()
+
+    @patch("sys.argv", ["fitbit-cli", "--json", "--user-profile"])
+    def test_json_with_data_flag_parses_successfully(self):
+        """Test that --json combined with a data flag parses without error."""
+        args = parse_arguments()
+        self.assertTrue(args.json)
+        self.assertTrue(args.user_profile)
+
+    @patch("sys.argv", ["fitbit-cli", "--raw-json", "--devices"])
+    def test_raw_json_with_data_flag_parses_successfully(self):
+        """Test that --raw-json combined with a data flag parses without error."""
+        args = parse_arguments()
+        self.assertTrue(args.raw_json)
+        self.assertTrue(args.devices)
 
 
 if __name__ == "__main__":

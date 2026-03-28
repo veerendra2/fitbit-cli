@@ -40,9 +40,11 @@ def collect_activities(fitbit, args):
 def json_display(fitbit, args):
     """Fetch data and render each requested endpoint as a single JSON object to stdout."""
     result = {}
+    profile = None
 
     if args.user_profile:
-        result.update(fmt.display_user_profile(fitbit.get_user_profile(), as_json=True))
+        profile = fitbit.get_user_profile()
+        result.update(fmt.display_user_profile(profile, as_json=True))
     if args.devices:
         result.update(fmt.display_devices(fitbit.get_devices(), as_json=True))
     if args.sleep:
@@ -73,9 +75,9 @@ def json_display(fitbit, args):
         )
     if args.activities:
         activity_data = collect_activities(fitbit, args)
-        unit_system = (
-            fitbit.get_user_profile().get("user", {}).get("distanceUnit", "METRIC")
-        )
+        if profile is None:
+            profile = fitbit.get_user_profile()
+        unit_system = profile.get("user", {}).get("distanceUnit", "METRIC")
         result.update(fmt.display_activity(activity_data, unit_system, as_json=True))
 
     print(json.dumps(result, separators=(",", ":")))
@@ -110,8 +112,10 @@ def raw_json_display(fitbit, args):
 def table_display(fitbit, args):
     """Fetch data and render rich tables to the terminal."""
     with fmt.CONSOLE.status("[bold green]Fetching data...") as _:
+        profile = None
         if args.user_profile:
-            fmt.display_user_profile(fitbit.get_user_profile())
+            profile = fitbit.get_user_profile()
+            fmt.display_user_profile(profile)
         if args.devices:
             fmt.display_devices(fitbit.get_devices())
         if args.sleep:
@@ -128,7 +132,7 @@ def table_display(fitbit, args):
             )
         if args.activities:
             activity_data = collect_activities(fitbit, args)
-            unit_system = (
-                fitbit.get_user_profile().get("user", {}).get("distanceUnit", "METRIC")
-            )
+            if profile is None:
+                profile = fitbit.get_user_profile()
+            unit_system = profile.get("user", {}).get("distanceUnit", "METRIC")
             fmt.display_activity(activity_data, unit_system)

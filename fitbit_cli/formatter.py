@@ -338,7 +338,11 @@ def display_activity(activity_data, unit_system, as_json=False):
                             "start_time": a.get("startTime"),
                             "name": a.get("name"),
                             "description": a.get("description"),
-                            "distance": f"{a.get('distance')} {dis_unit}",
+                            "distance": (
+                                f"{a.get('distance', 'N/A')} {dis_unit}"
+                                if a.get("distance") is not None
+                                else None
+                            ),
                             "steps": a.get("steps"),
                             "calories": a.get("calories"),
                             "duration_minutes": round(a.get("duration", 0) / 60000, 1),
