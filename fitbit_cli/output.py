@@ -4,7 +4,7 @@ Output modes for the Fitbit CLI
 """
 
 import json
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 from . import formatter as fmt
 
@@ -13,11 +13,19 @@ def collect_activities(fitbit, args):
     """Fetch activity data for a date or date range."""
     start_date, end_date = args.activities
     if end_date is None:
-        data = fitbit.get_daily_activity_summary(start_date)
+        data = fitbit.get_daily_activity_summary(str(start_date))
         data["date"] = str(start_date)
         return [data]
-    start = datetime.strptime(start_date, "%Y-%m-%d")
-    end = datetime.strptime(end_date, "%Y-%m-%d")
+    start = (
+        start_date
+        if isinstance(start_date, date)
+        else datetime.strptime(start_date, "%Y-%m-%d").date()
+    )
+    end = (
+        end_date
+        if isinstance(end_date, date)
+        else datetime.strptime(end_date, "%Y-%m-%d").date()
+    )
     return [
         {
             **fitbit.get_daily_activity_summary(
@@ -30,7 +38,7 @@ def collect_activities(fitbit, args):
 
 
 def json_display(fitbit, args):
-    """Fetch data and render each requested endpoint as a single pretty JSON object to stdout."""
+    """Fetch data and render each requested endpoint as a single JSON object to stdout."""
     result = {}
 
     if args.user_profile:
@@ -66,15 +74,15 @@ def json_display(fitbit, args):
     if args.activities:
         activity_data = collect_activities(fitbit, args)
         unit_system = (
-            fitbit.get_user_profile().get("user", "").get("distanceUnit", "METRIC")
+            fitbit.get_user_profile().get("user", {}).get("distanceUnit", "METRIC")
         )
         result.update(fmt.display_activity(activity_data, unit_system, as_json=True))
 
-    print(json.dumps(result, indent=2))
+    print(json.dumps(result, separators=(",", ":")))
 
 
 def raw_json_display(fitbit, args):
-    """Collect API responses and print compact JSON to stdout."""
+    """Collect raw API responses and print compact JSON to stdout."""
     result = {}
 
     if args.user_profile:
@@ -96,7 +104,7 @@ def raw_json_display(fitbit, args):
     if args.activities:
         result["activities"] = collect_activities(fitbit, args)
 
-    print(json.dumps(result))
+    print(json.dumps(result, separators=(",", ":")))
 
 
 def table_display(fitbit, args):
@@ -121,6 +129,6 @@ def table_display(fitbit, args):
         if args.activities:
             activity_data = collect_activities(fitbit, args)
             unit_system = (
-                fitbit.get_user_profile().get("user", "").get("distanceUnit", "METRIC")
+                fitbit.get_user_profile().get("user", {}).get("distanceUnit", "METRIC")
             )
             fmt.display_activity(activity_data, unit_system)

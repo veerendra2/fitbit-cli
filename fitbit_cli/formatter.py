@@ -48,7 +48,7 @@ def display_user_profile(user_data, as_json=False):
     table.add_row(":hourglass_flowing_sand: Age", str(user["age"]))
     table.add_row(":restroom: Gender", user["gender"])
     table.add_row(":straight_ruler: Height", f"{user['height']:.1f} {height_unit}")
-    table.add_row(":weight_lifter:  Weight", f"{user['weight']:.1f} {weight_unit}")
+    table.add_row(":weight_lifter: Weight", f"{user['weight']:.1f} {weight_unit}")
     table.add_row(":footprints: Average Daily Steps", str(user["averageDailySteps"]))
     table.add_row(":calendar: Member Since", user["memberSince"])
     table.add_row(":clock1: Time Zone", user["timezone"])
