@@ -152,7 +152,7 @@ pytest tests/ --cov=fitbit_cli
 ### General Principles
 
 - Keep code **simple, short, and production-ready**.
-- Write as a senior Python developer — readable, direct, no over-engineering.
+- Write as a senior Python developer — readable, direct, no overengineering.
 - **Do not decompose into too many small functions** for the sake of it; favour readability over abstraction.
 - **Do not change existing code** unless directly required by the task.
 
