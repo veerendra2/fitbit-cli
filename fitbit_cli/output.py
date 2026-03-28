@@ -1,0 +1,137 @@
+# -*- coding: utf-8 -*-
+"""
+Output modes for the Fitbit CLI
+"""
+
+import json
+from datetime import date, datetime, timedelta
+
+from . import formatter as fmt
+
+
+def collect_activities(fitbit, args):
+    """Fetch activity data for a date or date range."""
+    start_date, end_date = args.activities
+    if end_date is None:
+        data = fitbit.get_daily_activity_summary(str(start_date))
+        return [{**data, "date": str(start_date)}]
+    start = (
+        start_date
+        if isinstance(start_date, date)
+        else datetime.strptime(start_date, "%Y-%m-%d").date()
+    )
+    end = (
+        end_date
+        if isinstance(end_date, date)
+        else datetime.strptime(end_date, "%Y-%m-%d").date()
+    )
+    return [
+        {
+            **fitbit.get_daily_activity_summary(
+                (start + timedelta(days=i)).strftime("%Y-%m-%d")
+            ),
+            "date": (start + timedelta(days=i)).strftime("%Y-%m-%d"),
+        }
+        for i in range((end - start).days + 1)
+    ]
+
+
+def json_display(fitbit, args):
+    """Fetch data and render each requested endpoint as a single JSON object to stdout."""
+    result = {}
+    profile = None
+
+    if args.user_profile:
+        profile = fitbit.get_user_profile()
+        result.update(fmt.display_user_profile(profile, as_json=True))
+    if args.devices:
+        result.update(fmt.display_devices(fitbit.get_devices(), as_json=True))
+    if args.sleep:
+        result.update(
+            fmt.display_sleep(fitbit.get_sleep_log(*args.sleep), as_json=True)
+        )
+    if args.spo2:
+        result.update(
+            fmt.display_spo2(fitbit.get_spo2_summary(*args.spo2), as_json=True)
+        )
+    if args.heart:
+        result.update(
+            fmt.display_heart_data(
+                fitbit.get_heart_rate_time_series(*args.heart), as_json=True
+            )
+        )
+    if args.active_zone:
+        result.update(
+            fmt.display_azm_time_series(
+                fitbit.get_azm_time_series(*args.active_zone), as_json=True
+            )
+        )
+    if args.breathing_rate:
+        result.update(
+            fmt.display_breathing_rate(
+                fitbit.get_breathing_rate_summary(*args.breathing_rate), as_json=True
+            )
+        )
+    if args.activities:
+        activity_data = collect_activities(fitbit, args)
+        if profile is None:
+            profile = fitbit.get_user_profile()
+        unit_system = profile.get("user", {}).get("distanceUnit", "METRIC")
+        result.update(fmt.display_activity(activity_data, unit_system, as_json=True))
+
+    print(json.dumps(result, separators=(",", ":")))
+
+
+def raw_json_display(fitbit, args):
+    """Collect raw API responses and print compact JSON to stdout."""
+    result = {}
+
+    if args.user_profile:
+        result["user_profile"] = fitbit.get_user_profile()
+    if args.devices:
+        result["devices"] = fitbit.get_devices()
+    if args.sleep:
+        result["sleep"] = fitbit.get_sleep_log(*args.sleep)
+    if args.spo2:
+        result["spo2"] = fitbit.get_spo2_summary(*args.spo2)
+    if args.heart:
+        result["heart"] = fitbit.get_heart_rate_time_series(*args.heart)
+    if args.active_zone:
+        result["active_zone"] = fitbit.get_azm_time_series(*args.active_zone)
+    if args.breathing_rate:
+        result["breathing_rate"] = fitbit.get_breathing_rate_summary(
+            *args.breathing_rate
+        )
+    if args.activities:
+        result["activities"] = collect_activities(fitbit, args)
+
+    print(json.dumps(result, separators=(",", ":")))
+
+
+def table_display(fitbit, args):
+    """Fetch data and render rich tables to the terminal."""
+    with fmt.CONSOLE.status("[bold green]Fetching data...") as _:
+        profile = None
+        if args.user_profile:
+            profile = fitbit.get_user_profile()
+            fmt.display_user_profile(profile)
+        if args.devices:
+            fmt.display_devices(fitbit.get_devices())
+        if args.sleep:
+            fmt.display_sleep(fitbit.get_sleep_log(*args.sleep))
+        if args.spo2:
+            fmt.display_spo2(fitbit.get_spo2_summary(*args.spo2))
+        if args.heart:
+            fmt.display_heart_data(fitbit.get_heart_rate_time_series(*args.heart))
+        if args.active_zone:
+            fmt.display_azm_time_series(fitbit.get_azm_time_series(*args.active_zone))
+        if args.breathing_rate:
+            fmt.display_breathing_rate(
+                fitbit.get_breathing_rate_summary(*args.breathing_rate)
+            )
+        if args.activities:
+            activity_data = collect_activities(fitbit, args)
+            if profile is None:
+                profile = fitbit.get_user_profile()
+            unit_system = profile.get("user", {}).get("distanceUnit", "METRIC")
+            fmt.display_activity(activity_data, unit_system)
