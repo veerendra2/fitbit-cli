@@ -179,6 +179,12 @@ class TestCLIDateFunctions(unittest.TestCase):
         self.assertTrue(args.raw_json)
         self.assertTrue(args.devices)
 
+    @patch("sys.argv", ["fitbit-cli", "--init-auth"])
+    def test_init_auth_alone_parses_successfully(self):
+        """Test that --init-auth alone does not trigger the no-arguments error."""
+        args = parse_arguments()
+        self.assertTrue(args.init_auth)
+
 
 if __name__ == "__main__":
     unittest.main()

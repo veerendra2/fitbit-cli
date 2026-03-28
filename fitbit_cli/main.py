@@ -16,6 +16,7 @@ def main():
 
     if args.init_auth:
         setup.fitbit_init_setup()
+        return
 
     credentials = setup.read_fitbit_token()
 

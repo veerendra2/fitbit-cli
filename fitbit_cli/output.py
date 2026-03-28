@@ -14,8 +14,7 @@ def collect_activities(fitbit, args):
     start_date, end_date = args.activities
     if end_date is None:
         data = fitbit.get_daily_activity_summary(str(start_date))
-        data["date"] = str(start_date)
-        return [data]
+        return [{**data, "date": str(start_date)}]
     start = (
         start_date
         if isinstance(start_date, date)

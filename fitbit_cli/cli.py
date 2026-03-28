@@ -170,10 +170,12 @@ def parse_arguments():
     args = parser.parse_args()
 
     data_args = {
-        k: v for k, v in vars(args).items() if k not in ("json", "raw_json", "version")
+        k: v
+        for k, v in vars(args).items()
+        if k not in ("json", "raw_json", "init_auth", "version")
     }
 
-    if not any(data_args.values()):
+    if not args.init_auth and not any(data_args.values()):
         parser.error("No arguments provided. At least one argument is required.")
 
     return args
