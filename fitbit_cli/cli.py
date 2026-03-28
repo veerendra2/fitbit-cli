@@ -76,7 +76,7 @@ def parse_arguments():
         "-j",
         "--json",
         action="store_true",
-        help="Output table data as pretty JSON.",
+        help="Output table data as JSON.",
     )
 
     parser.add_argument(

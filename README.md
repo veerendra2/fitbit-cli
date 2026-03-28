@@ -44,15 +44,15 @@ python -m pip install fitbit-cli
 
 ```bash
 fitbit-cli -h
-usage: fitbit-cli [-h] [-i] [-s [DATE[,DATE]|RELATIVE]] [-o [DATE[,DATE]|RELATIVE]] [-e [DATE[,DATE]|RELATIVE]] [-a [DATE[,DATE]|RELATIVE]] [-b [DATE[,DATE]|RELATIVE]]
-                  [-t [DATE[,DATE]|RELATIVE]] [-u] [-d] [-j] [-r] [-v]
+usage: fitbit-cli [-h] [-i] [-j] [-r] [-s [DATE[,DATE]|RELATIVE]] [-o [DATE[,DATE]|RELATIVE]] [-e [DATE[,DATE]|RELATIVE]] [-a [DATE[,DATE]|RELATIVE]]
+                  [-b [DATE[,DATE]|RELATIVE]] [-t [DATE[,DATE]|RELATIVE]] [-u] [-d] [-v]
 
 Fitbit CLI -- Access your Fitbit data at your terminal.
 
 options:
   -h, --help            show this help message and exit
   -i, --init-auth       Initialize Fitbit iterative authentication setup
-  -j, --json            Output table data as pretty JSON.
+  -j, --json            Output table data as JSON.
   -r, --raw-json        Output raw JSON from the Fitbit API.
   -v, --version         Show fitbit-cli version
 
