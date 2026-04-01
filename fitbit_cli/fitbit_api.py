@@ -150,6 +150,22 @@ class FitbitAPI:
         response = self.make_request("GET", url)
         return response.json()
 
+    def get_hrv_summary(self, start_date, end_date=None):
+        """Get HRV Summary by Interval and Date"""
+
+        date_range = f"{start_date}/{end_date}" if end_date else start_date
+        url = f"https://api.fitbit.com/1/user/-/hrv/date/{date_range}.json"
+        response = self.make_request("GET", url)
+        return response.json()
+
+    def get_hrv_intraday(self, start_date, end_date=None):
+        """Get HRV Intraday by Interval and Date"""
+
+        date_range = f"{start_date}/{end_date}" if end_date else start_date
+        url = f"https://api.fitbit.com/1/user/-/hrv/date/{date_range}/all.json"
+        response = self.make_request("GET", url)
+        return response.json()
+
     def get_daily_activity_summary(self, start_date):
         """Get Daily Activity Summary"""
 

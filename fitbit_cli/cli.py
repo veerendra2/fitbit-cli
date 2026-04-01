@@ -138,6 +138,14 @@ def parse_arguments():
         help="Show Breathing Rate Summary by Interval.",
     )
     group.add_argument(
+        "--hrv",
+        type=parse_date_range,
+        nargs="?",
+        const=(datetime.today().date(), None),
+        metavar="DATE[,DATE]|RELATIVE",
+        help="Show HRV Summary by Interval.",
+    )
+    group.add_argument(
         "-t",
         "--activities",
         type=parse_date_range,

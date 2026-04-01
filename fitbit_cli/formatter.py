@@ -279,6 +279,38 @@ def display_breathing_rate(breathing_rate_data, as_json=False):
     return None
 
 
+def display_hrv(hrv_data, as_json=False):
+    """HRV data formatter"""
+
+    if as_json:
+        return {
+            "hrv": [
+                {
+                    "date": h.get("dateTime"),
+                    "daily_rmssd": h.get("value", {}).get("dailyRmssd"),
+                    "deep_rmssd": h.get("value", {}).get("deepRmssd"),
+                }
+                for h in hrv_data.get("hrv", [])
+            ]
+        }
+
+    table = Table(title="HRV Data Summary :heartpulse:", show_header=True)
+
+    table.add_column("Date :calendar:")
+    table.add_column("Daily RMSSD :chart_with_upwards_trend:")
+    table.add_column("Deep RMSSD :sleeping:")
+
+    for hrv in hrv_data.get("hrv", []):
+        table.add_row(
+            hrv.get("dateTime", "N/A"),
+            str(hrv.get("value", {}).get("dailyRmssd", "N/A")),
+            str(hrv.get("value", {}).get("deepRmssd", "N/A")),
+        )
+
+    CONSOLE.print(table)
+    return None
+
+
 def display_devices(devices, as_json=False):
     """Devices list formatter"""
 

@@ -185,6 +185,44 @@ class TestCLIDateFunctions(unittest.TestCase):
         args = parse_arguments()
         self.assertTrue(args.init_auth)
 
+    @patch("sys.argv", ["fitbit-cli", "--hrv"])
+    def test_hrv_flag_parses_successfully(self):
+        """Test that --hrv flag parses without error."""
+        args = parse_arguments()
+        self.assertIsNotNone(args.hrv)
+
+    @patch("sys.argv", ["fitbit-cli", "--json", "--hrv"])
+    def test_hrv_with_json_flag_parses_successfully(self):
+        """Test that --hrv combined with --json parses without error."""
+        args = parse_arguments()
+        self.assertTrue(args.json)
+        self.assertIsNotNone(args.hrv)
+
+    @patch("sys.argv", ["fitbit-cli", "--raw-json", "--hrv"])
+    def test_hrv_with_raw_json_flag_parses_successfully(self):
+        """Test that --hrv combined with --raw-json parses without error."""
+        args = parse_arguments()
+        self.assertTrue(args.raw_json)
+        self.assertIsNotNone(args.hrv)
+
+    @patch("sys.argv", ["fitbit-cli", "--hrv", "2024-01-01"])
+    def test_hrv_with_single_date_parses_successfully(self):
+        """Test that --hrv with a single date parses without error."""
+        args = parse_arguments()
+        self.assertIsNotNone(args.hrv)
+
+    @patch("sys.argv", ["fitbit-cli", "--hrv", "2024-01-01,2024-01-07"])
+    def test_hrv_with_date_range_parses_successfully(self):
+        """Test that --hrv with a date range parses without error."""
+        args = parse_arguments()
+        self.assertIsNotNone(args.hrv)
+
+    @patch("sys.argv", ["fitbit-cli", "--hrv", "last-week"])
+    def test_hrv_with_relative_date_parses_successfully(self):
+        """Test that --hrv with a relative date parses without error."""
+        args = parse_arguments()
+        self.assertIsNotNone(args.hrv)
+
 
 if __name__ == "__main__":
     unittest.main()
