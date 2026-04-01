@@ -1,12 +1,11 @@
 ---
-name: ci
+name: CI
 on:
-  pull_request:
-    paths:
-      - "**/**"
+  pull_request_target:
+    types: [opened, synchronize, reopened]
 
 permissions:
-  contents: write
+  contents: read
   checks: write
   pull-requests: write
 
@@ -57,16 +56,12 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8 pytest pytest-cov
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest pytest-cov
+          pip install -e .
 
       - name: Build coverage file
         run: |
-          pytest tests/ --cov=fitbit_cli --junitxml=/tmp/pytest.xml | tee /tmp/pytest-coverage.txt
-
-      - name: Build coverage file
-        run: |
-          pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=app tests/ | tee pytest-coverage.txt
+          pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=fitbit_cli tests/ | tee pytest-coverage.txt
 
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main
