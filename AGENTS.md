@@ -186,7 +186,7 @@ Use sparingly and only when justified:
 
 ## CI/CD
 
-- **ci.yml**: Runs on PRs. Executes `super-linter` (black + isort + pylint; flake8/ruff disabled) then `pytest --cov` on Python 3.12.
+- **ci.yml**: Runs on PRs. Executes `super-linter` (black + isort + pylint; flake8/ruff disabled) then `pytest --cov` on Python 3.14.
 - **release.yml**: Triggered on GitHub Release creation. Publishes to PyPI via `twine`.
 - **dependabot.yml**: Weekly updates for `pip` and `github-actions` dependencies.
 
