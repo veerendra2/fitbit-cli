@@ -72,6 +72,8 @@ def json_display(fitbit, args):
                 fitbit.get_breathing_rate_summary(*args.breathing_rate), as_json=True
             )
         )
+    if args.hrv:
+        result.update(fmt.display_hrv(fitbit.get_hrv_summary(*args.hrv), as_json=True))
     if args.activities:
         activity_data = collect_activities(fitbit, args)
         if profile is None:
@@ -102,6 +104,8 @@ def raw_json_display(fitbit, args):
         result["breathing_rate"] = fitbit.get_breathing_rate_summary(
             *args.breathing_rate
         )
+    if args.hrv:
+        result["hrv"] = fitbit.get_hrv_summary(*args.hrv)
     if args.activities:
         result["activities"] = collect_activities(fitbit, args)
 
@@ -129,6 +133,8 @@ def table_display(fitbit, args):
             fmt.display_breathing_rate(
                 fitbit.get_breathing_rate_summary(*args.breathing_rate)
             )
+        if args.hrv:
+            fmt.display_hrv(fitbit.get_hrv_summary(*args.hrv))
         if args.activities:
             activity_data = collect_activities(fitbit, args)
             if profile is None:
