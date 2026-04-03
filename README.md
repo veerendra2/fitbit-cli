@@ -31,6 +31,7 @@ Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, 
 | [Get AZM Time Series by Interval](https://dev.fitbit.com/build/reference/web-api/active-zone-minutes-timeseries/get-azm-timeseries-by-interval/)        | ✅     |
 | [Get Breathing Rate Summary by Interval](https://dev.fitbit.com/build/reference/web-api/breathing-rate/get-br-summary-by-interval/)                     | ✅     |
 | [Get Daily Activity Summary](https://dev.fitbit.com/build/reference/web-api/activity/get-daily-activity-summary/)                                       | ✅     |
+| [Get HRV Summary by Interval](https://dev.fitbit.com/build/reference/web-api/heartrate-variability/get-hrv-summary-by-interval/)                        | ✅     |
 
 ## Usage Guide
 
@@ -45,7 +46,7 @@ python -m pip install fitbit-cli
 ```bash
 fitbit-cli -h
 usage: fitbit-cli [-h] [-i] [-j] [-r] [-s [DATE[,DATE]|RELATIVE]] [-o [DATE[,DATE]|RELATIVE]] [-e [DATE[,DATE]|RELATIVE]] [-a [DATE[,DATE]|RELATIVE]]
-                  [-b [DATE[,DATE]|RELATIVE]] [-t [DATE[,DATE]|RELATIVE]] [-u] [-d] [-v]
+                  [-b [DATE[,DATE]|RELATIVE]] [-t [DATE[,DATE]|RELATIVE]] [-H [DATE[,DATE]|RELATIVE]] [-u] [-d] [-v]
 
 Fitbit CLI -- Access your Fitbit data at your terminal.
 
@@ -73,6 +74,8 @@ APIs:
                         Show Breathing Rate Summary by Interval.
   -t, --activities [DATE[,DATE]|RELATIVE]
                         Show Daily Activity Summary.
+  -H, --hrv [DATE[,DATE]|RELATIVE]
+                        Show HRV Summary by Interval.
   -u, --user-profile    Show Profile.
   -d, --devices         Show Devices.
 ```
