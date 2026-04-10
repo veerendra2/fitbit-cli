@@ -9,16 +9,6 @@ from datetime import date, datetime, timedelta
 from . import formatter as fmt
 
 
-def _remove_source(data, key):
-    """Remove source field from weight and body fat output."""
-    return {
-        key: [
-            {k: v for k, v in item.items() if k != "source"}
-            for item in data.get(key, [])
-        ]
-    }
-
-
 def collect_activities(fitbit, args):
     """Fetch activity data for a date or date range."""
     start_date, end_date = args.activities
@@ -125,13 +115,9 @@ def raw_json_display(fitbit, args):
     if args.hrv:
         result["hrv"] = fitbit.get_hrv_summary(*args.hrv)
     if args.weight:
-        result["weight"] = _remove_source(
-            fitbit.get_weight_log(*args.weight), "weight"
-        )["weight"]
+        result["weight"] = fitbit.get_weight_log(*args.weight)
     if args.body_fat:
-        result["body_fat"] = _remove_source(
-            fitbit.get_body_fat_log(*args.body_fat), "fat"
-        )["fat"]
+        result["body_fat"] = fitbit.get_body_fat_log(*args.body_fat)
     if args.activities:
         result["activities"] = collect_activities(fitbit, args)
 

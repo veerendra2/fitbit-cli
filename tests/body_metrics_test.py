@@ -90,6 +90,7 @@ class TestBodyMetrics(unittest.TestCase):
                         "time": "07:15:00",
                         "weight": 81.5,
                         "bmi": 24.7,
+                        "source": "Aria",
                     }
                 ]
             },
@@ -119,6 +120,7 @@ class TestBodyMetrics(unittest.TestCase):
                         "date": "2026-04-01",
                         "time": "07:15:00",
                         "fat": 19.2,
+                        "source": "Aria",
                     }
                 ]
             },
@@ -153,11 +155,11 @@ class TestBodyMetrics(unittest.TestCase):
             output.json_display(fitbit, args)
 
         mock_print.assert_called_once_with(
-            '{"weight":[{"date":"2026-04-01","time":"07:15:00","weight":81.5,"bmi":24.7}],"body_fat":[{"date":"2026-04-01","time":"07:15:00","fat":19.2}]}'
+            '{"weight":[{"date":"2026-04-01","time":"07:15:00","weight":81.5,"bmi":24.7,"source":null}],"body_fat":[{"date":"2026-04-01","time":"07:15:00","fat":19.2,"source":null}]}'
         )
 
-    def test_raw_json_display_strips_source_from_weight_and_body_fat(self):
-        """Test that raw_json_display removes source from weight and body fat output."""
+    def test_raw_json_display_includes_source_for_weight_and_body_fat(self):
+        """Test that raw_json_display keeps source in weight and body fat output."""
         fitbit = MagicMock()
         fitbit.get_weight_log.return_value = {
             "weight": [
@@ -198,7 +200,7 @@ class TestBodyMetrics(unittest.TestCase):
             output.raw_json_display(fitbit, args)
 
         mock_print.assert_called_once_with(
-            '{"weight":[{"date":"2026-04-01","time":"07:15:00","weight":81.5,"bmi":24.7}],"body_fat":[{"date":"2026-04-01","time":"07:15:00","fat":19.2}]}'
+            '{"weight":{"weight":[{"date":"2026-04-01","time":"07:15:00","weight":81.5,"bmi":24.7,"source":"Aria"}]},"body_fat":{"fat":[{"date":"2026-04-01","time":"07:15:00","fat":19.2,"source":"Aria"}]}}'
         )
 
 

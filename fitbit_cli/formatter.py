@@ -322,6 +322,7 @@ def display_weight(weight_data, as_json=False):
                     "time": weight.get("time"),
                     "weight": weight.get("weight"),
                     "bmi": weight.get("bmi"),
+                    "source": weight.get("source"),
                 }
                 for weight in weight_data.get("weight", [])
             ]
@@ -333,6 +334,7 @@ def display_weight(weight_data, as_json=False):
     table.add_column("Time :clock3:")
     table.add_column("Weight :weight_lifter:")
     table.add_column("BMI :straight_ruler:")
+    table.add_column("Source :satellite:")
 
     for weight in weight_data.get("weight", []):
         table.add_row(
@@ -340,6 +342,7 @@ def display_weight(weight_data, as_json=False):
             str(weight.get("time", "N/A")),
             str(weight.get("weight", "N/A")),
             str(weight.get("bmi", "N/A")),
+            str(weight.get("source", "N/A")),
         )
 
     CONSOLE.print(table)
@@ -356,6 +359,7 @@ def display_body_fat(body_fat_data, as_json=False):
                     "date": body_fat.get("date"),
                     "time": body_fat.get("time"),
                     "fat": body_fat.get("fat"),
+                    "source": body_fat.get("source"),
                 }
                 for body_fat in body_fat_data.get("fat", [])
             ]
@@ -366,12 +370,14 @@ def display_body_fat(body_fat_data, as_json=False):
     table.add_column("Date :calendar:")
     table.add_column("Time :clock3:")
     table.add_column("Body Fat % :chart_with_upwards_trend:")
+    table.add_column("Source :satellite:")
 
     for body_fat in body_fat_data.get("fat", []):
         table.add_row(
             str(body_fat.get("date", "N/A")),
             str(body_fat.get("time", "N/A")),
             str(body_fat.get("fat", "N/A")),
+            str(body_fat.get("source", "N/A")),
         )
 
     CONSOLE.print(table)
