@@ -311,6 +311,73 @@ def display_hrv(hrv_data, as_json=False):
     return None
 
 
+def display_weight(weight_data, as_json=False):
+    """Weight data formatter"""
+
+    if as_json:
+        return {
+            "weight": [
+                {
+                    "date": weight.get("date"),
+                    "time": weight.get("time"),
+                    "weight": weight.get("weight"),
+                    "bmi": weight.get("bmi"),
+                }
+                for weight in weight_data.get("weight", [])
+            ]
+        }
+
+    table = Table(title="Weight Log :balance_scale:", show_header=True)
+
+    table.add_column("Date :calendar:")
+    table.add_column("Time :clock3:")
+    table.add_column("Weight :weight_lifter:")
+    table.add_column("BMI :straight_ruler:")
+
+    for weight in weight_data.get("weight", []):
+        table.add_row(
+            str(weight.get("date", "N/A")),
+            str(weight.get("time", "N/A")),
+            str(weight.get("weight", "N/A")),
+            str(weight.get("bmi", "N/A")),
+        )
+
+    CONSOLE.print(table)
+    return None
+
+
+def display_body_fat(body_fat_data, as_json=False):
+    """Body fat data formatter"""
+
+    if as_json:
+        return {
+            "body_fat": [
+                {
+                    "date": body_fat.get("date"),
+                    "time": body_fat.get("time"),
+                    "fat": body_fat.get("fat"),
+                }
+                for body_fat in body_fat_data.get("fat", [])
+            ]
+        }
+
+    table = Table(title="Body Fat Log :anatomical_heart:", show_header=True)
+
+    table.add_column("Date :calendar:")
+    table.add_column("Time :clock3:")
+    table.add_column("Body Fat % :chart_with_upwards_trend:")
+
+    for body_fat in body_fat_data.get("fat", []):
+        table.add_row(
+            str(body_fat.get("date", "N/A")),
+            str(body_fat.get("time", "N/A")),
+            str(body_fat.get("fat", "N/A")),
+        )
+
+    CONSOLE.print(table)
+    return None
+
+
 def display_devices(devices, as_json=False):
     """Devices list formatter"""
 
