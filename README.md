@@ -31,8 +31,8 @@ Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, 
 | [Get AZM Time Series by Interval](https://dev.fitbit.com/build/reference/web-api/active-zone-minutes-timeseries/get-azm-timeseries-by-interval/)        | ✅     |
 | [Get Breathing Rate Summary by Interval](https://dev.fitbit.com/build/reference/web-api/breathing-rate/get-br-summary-by-interval/)                     | ✅     |
 | [Get Daily Activity Summary](https://dev.fitbit.com/build/reference/web-api/activity/get-daily-activity-summary/)                                       | ✅     |
-| [Get Weight Log by Date](https://dev.fitbit.com/build/reference/web-api/body/get-weight-log-by-date/)                                                   | ✅     |
-| [Get Body Fat Log by Date](https://dev.fitbit.com/build/reference/web-api/body/get-body-fat-log-by-date/)                                               | ✅     |
+| [Get Weight Log](https://dev.fitbit.com/build/reference/web-api/body/get-weight-log/)                                                                    | ✅     |
+| [Get Body Fat Log](https://dev.fitbit.com/build/reference/web-api/body/get-bodyfat-log/)                                                                 | ✅     |
 | [Get HRV Summary by Interval](https://dev.fitbit.com/build/reference/web-api/heartrate-variability/get-hrv-summary-by-interval/)                        | ✅     |
 
 ## Usage Guide
