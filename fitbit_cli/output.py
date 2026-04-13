@@ -36,6 +36,16 @@ def collect_activities(fitbit, args):
     ]
 
 
+def collect_body(fitbit, args):
+    """Fetch body time series for weight, BMI, and body fat."""
+    start_date, end_date = args.body
+    return {
+        "weight": fitbit.get_body_time_series("weight", start_date, end_date),
+        "bmi": fitbit.get_body_time_series("bmi", start_date, end_date),
+        "fat": fitbit.get_body_time_series("fat", start_date, end_date),
+    }
+
+
 def json_display(fitbit, args):
     """Fetch data and render each requested endpoint as a single JSON object to stdout."""
     result = {}
@@ -74,14 +84,8 @@ def json_display(fitbit, args):
         )
     if args.hrv:
         result.update(fmt.display_hrv(fitbit.get_hrv_summary(*args.hrv), as_json=True))
-    if args.weight:
-        result.update(
-            fmt.display_weight(fitbit.get_weight_log(*args.weight), as_json=True)
-        )
-    if args.body_fat:
-        result.update(
-            fmt.display_body_fat(fitbit.get_body_fat_log(*args.body_fat), as_json=True)
-        )
+    if args.body:
+        result.update(fmt.display_body(collect_body(fitbit, args), as_json=True))
     if args.activities:
         activity_data = collect_activities(fitbit, args)
         if profile is None:
@@ -114,10 +118,8 @@ def raw_json_display(fitbit, args):
         )
     if args.hrv:
         result["hrv"] = fitbit.get_hrv_summary(*args.hrv)
-    if args.weight:
-        result["weight"] = fitbit.get_weight_log(*args.weight)
-    if args.body_fat:
-        result["body_fat"] = fitbit.get_body_fat_log(*args.body_fat)
+    if args.body:
+        result["body"] = collect_body(fitbit, args)
     if args.activities:
         result["activities"] = collect_activities(fitbit, args)
 
@@ -147,10 +149,8 @@ def table_display(fitbit, args):
             )
         if args.hrv:
             fmt.display_hrv(fitbit.get_hrv_summary(*args.hrv))
-        if args.weight:
-            fmt.display_weight(fitbit.get_weight_log(*args.weight))
-        if args.body_fat:
-            fmt.display_body_fat(fitbit.get_body_fat_log(*args.body_fat))
+        if args.body:
+            fmt.display_body(collect_body(fitbit, args))
         if args.activities:
             activity_data = collect_activities(fitbit, args)
             if profile is None:

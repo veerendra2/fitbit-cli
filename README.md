@@ -31,8 +31,7 @@ Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, 
 | [Get AZM Time Series by Interval](https://dev.fitbit.com/build/reference/web-api/active-zone-minutes-timeseries/get-azm-timeseries-by-interval/)        | ✅     |
 | [Get Breathing Rate Summary by Interval](https://dev.fitbit.com/build/reference/web-api/breathing-rate/get-br-summary-by-interval/)                     | ✅     |
 | [Get Daily Activity Summary](https://dev.fitbit.com/build/reference/web-api/activity/get-daily-activity-summary/)                                       | ✅     |
-| [Get Weight Log](https://dev.fitbit.com/build/reference/web-api/body/get-weight-log/)                                                                    | ✅     |
-| [Get Body Fat Log](https://dev.fitbit.com/build/reference/web-api/body/get-bodyfat-log/)                                                                 | ✅     |
+| [Get Body Time Series by Date Range](https://dev.fitbit.com/build/reference/web-api/body-timeseries/get-body-timeseries-by-date-range/)                 | ✅     |
 | [Get HRV Summary by Interval](https://dev.fitbit.com/build/reference/web-api/heartrate-variability/get-hrv-summary-by-interval/)                        | ✅     |
 
 ## Usage Guide
@@ -48,8 +47,8 @@ python -m pip install fitbit-cli
 ```bash
 fitbit-cli -h
 usage: fitbit-cli [-h] [-i] [-j] [-r] [-s [DATE[,DATE]|RELATIVE]] [-o [DATE[,DATE]|RELATIVE]] [-e [DATE[,DATE]|RELATIVE]] [-a [DATE[,DATE]|RELATIVE]]
-                  [-b [DATE[,DATE]|RELATIVE]] [-H [DATE[,DATE]|RELATIVE]] [-w [DATE[,DATE]|RELATIVE]]
-                  [-f [DATE[,DATE]|RELATIVE]] [-t [DATE[,DATE]|RELATIVE]] [-u] [-d] [-v]
+                  [-b [DATE[,DATE]|RELATIVE]] [-H [DATE[,DATE]|RELATIVE]] [-B [DATE[,DATE]|RELATIVE]]
+                  [-t [DATE[,DATE]|RELATIVE]] [-u] [-d] [-v]
 
 Fitbit CLI -- Access your Fitbit data at your terminal.
 
@@ -77,10 +76,8 @@ APIs:
                         Show Breathing Rate Summary by Interval.
   -H, --hrv [DATE[,DATE]|RELATIVE]
                         Show HRV Summary by Interval.
-  -w, --weight [DATE[,DATE]|RELATIVE]
-                        Show Weight Log by Date Range.
-  -f, --body-fat [DATE[,DATE]|RELATIVE]
-                        Show Body Fat Log by Date Range.
+  -B, --body [DATE[,DATE]|RELATIVE]
+                        Show Body Time Series for Weight, BMI, and Body Fat.
   -t, --activities [DATE[,DATE]|RELATIVE]
                         Show Daily Activity Summary.
   -u, --user-profile    Show Profile.
