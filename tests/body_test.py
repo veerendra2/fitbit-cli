@@ -13,10 +13,10 @@ from unittest.mock import MagicMock, patch
 sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 
 # pylint: disable=C0413
-from fitbit_cli.cli import parse_arguments
-from fitbit_cli.fitbit_api import FitbitAPI
 from fitbit_cli import formatter as fmt
 from fitbit_cli import output
+from fitbit_cli.cli import parse_arguments
+from fitbit_cli.fitbit_api import FitbitAPI
 
 
 class TestBodyFeature(unittest.TestCase):
@@ -100,9 +100,24 @@ class TestBodyFeature(unittest.TestCase):
             result,
             {
                 "body": [
-                    {"date": "2024-01-01", "weight": "80.1", "bmi": "24.7", "fat": None},
-                    {"date": "2024-01-02", "weight": None, "bmi": "24.6", "fat": "18.1"},
-                    {"date": "2024-01-03", "weight": "79.8", "bmi": None, "fat": "18.0"},
+                    {
+                        "date": "2024-01-01",
+                        "weight": "80.1",
+                        "bmi": "24.7",
+                        "fat": None,
+                    },
+                    {
+                        "date": "2024-01-02",
+                        "weight": None,
+                        "bmi": "24.6",
+                        "fat": "18.1",
+                    },
+                    {
+                        "date": "2024-01-03",
+                        "weight": "79.8",
+                        "bmi": None,
+                        "fat": "18.0",
+                    },
                 ]
             },
         )
@@ -177,9 +192,12 @@ class TestBodyFeature(unittest.TestCase):
         with patch("builtins.print") as mock_print:
             output.raw_json_display(fitbit, args)
 
-        mock_print.assert_called_once_with(
-            '{"body":{"weight":{"body-weight":[{"dateTime":"2026-04-01","value":"81.5"}]},"bmi":{"body-bmi":[{"dateTime":"2026-04-01","value":"24.7"}]},"fat":{"body-fat":[{"dateTime":"2026-04-01","value":"19.2"}]}}}'
+        expected_json = (
+            '{"body":{"weight":{"body-weight":[{"dateTime":"2026-04-01","value":"81.5"}]},'
+            '"bmi":{"body-bmi":[{"dateTime":"2026-04-01","value":"24.7"}]},'
+            '"fat":{"body-fat":[{"dateTime":"2026-04-01","value":"19.2"}]}}}'
         )
+        mock_print.assert_called_once_with(expected_json)
 
     @patch("fitbit_cli.output.fmt.display_body")
     def test_table_display_uses_unified_body_formatter(self, mock_display_body):
@@ -207,7 +225,9 @@ class TestBodyFeature(unittest.TestCase):
 
         mock_display_body.assert_called_once_with(
             {
-                "weight": {"body-weight": [{"dateTime": "2026-04-01", "value": "81.5"}]},
+                "weight": {
+                    "body-weight": [{"dateTime": "2026-04-01", "value": "81.5"}]
+                },
                 "bmi": {"body-bmi": [{"dateTime": "2026-04-01", "value": "24.7"}]},
                 "fat": {"body-fat": [{"dateTime": "2026-04-01", "value": "19.2"}]},
             }
