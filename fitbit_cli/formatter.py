@@ -311,6 +311,58 @@ def display_hrv(hrv_data, as_json=False):
     return None
 
 
+def _merge_body_data(body_data):
+    """Merge weight, BMI, and body fat time series by date."""
+
+    merged = {}
+    resource_map = {
+        "weight": "body-weight",
+        "bmi": "body-bmi",
+        "fat": "body-fat",
+    }
+
+    for resource, response_key in resource_map.items():
+        for item in body_data.get(resource, {}).get(response_key, []):
+            date = item.get("dateTime")
+            if date not in merged:
+                merged[date] = {
+                    "date": date,
+                    "weight": None,
+                    "bmi": None,
+                    "fat": None,
+                }
+            merged[date][resource] = item.get("value")
+
+    return [merged[date] for date in sorted(merged)]
+
+
+def display_body(body_data, as_json=False):
+    """Body time series formatter"""
+
+    merged_body = _merge_body_data(body_data)
+
+    if as_json:
+        return {"body": merged_body}
+
+    table = Table(title="Body Time Series :balance_scale:", show_header=True)
+
+    table.add_column("Date :calendar:")
+    table.add_column("Weight :weight_lifter:")
+    table.add_column("BMI :straight_ruler:")
+    table.add_column("Body Fat % :chart_with_upwards_trend:")
+
+    for body in merged_body:
+        table.add_row(
+            str(body.get("date", "N/A")),
+            str(body.get("weight", "N/A")),
+            str(body.get("bmi", "N/A")),
+            str(body.get("fat", "N/A")),
+        )
+
+    CONSOLE.print(table)
+    return None
+
+
 def display_devices(devices, as_json=False):
     """Devices list formatter"""
 

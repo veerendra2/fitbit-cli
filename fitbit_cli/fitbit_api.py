@@ -158,6 +158,14 @@ class FitbitAPI:
         response = self.make_request("GET", url)
         return response.json()
 
+    def get_body_time_series(self, resource_path, start_date, end_date=None):
+        """Get Body Time Series by Interval and Date"""
+
+        date_range = f"{start_date}/{end_date}" if end_date else f"{start_date}/1d"
+        url = f"https://api.fitbit.com/1/user/-/body/{resource_path}/date/{date_range}.json"
+        response = self.make_request("GET", url)
+        return response.json()
+
     def get_daily_activity_summary(self, start_date):
         """Get Daily Activity Summary"""
 

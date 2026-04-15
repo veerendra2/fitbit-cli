@@ -147,6 +147,15 @@ def parse_arguments():
         help="Show HRV Summary by Interval.",
     )
     group.add_argument(
+        "-B",
+        "--body",
+        type=parse_date_range,
+        nargs="?",
+        const=(datetime.today().date(), None),
+        metavar="DATE[,DATE]|RELATIVE",
+        help="Show Body Time Series for Weight, BMI, and Body Fat.",
+    )
+    group.add_argument(
         "-t",
         "--activities",
         type=parse_date_range,
