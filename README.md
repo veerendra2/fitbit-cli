@@ -7,6 +7,10 @@
 
 > _This is not an official Fitbit CLI_
 
+> **Deprecation notice:** Fitbit is deprecating the legacy Fitbit Web API in favor of the [Google Health API](https://developers.google.com/health). Legacy Fitbit Web API endpoints are expected to be decommissioned in September 2026, and new integrations should use Google Health API instead.
+>
+> This CLI currently uses the legacy Fitbit Web API. There are no plans to migrate this project to the Google Health API. Until the Fitbit Web API is decommissioned, this project will be maintained in maintenance mode only and may be archived soon.
+
 Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, ❤️ heart rate, 🏋️‍♂️ activity levels, 🩸 SpO2, and more, all presented in a simple, easy-to-read table format!
 
 > **AI agent-friendly** 🤖 — since v1.6.0, use `--json` for minimized, token-efficient JSON output or `--raw-json` for the full Fitbit API response. No spinners, pure JSON.
