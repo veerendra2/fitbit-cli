@@ -46,7 +46,7 @@ setup(
         "Topic :: Utilities",
     ],
     install_requires=[
-        "requests==2.33.1",
+        "requests==2.34.2",
         "rich==15.0.0",
     ],
     python_requires=">=3.12",
