@@ -136,10 +136,9 @@ class FitbitAPI:
         response = self.make_request("GET", url)
         return response.json()
 
-    def _fetch_chunked_data(
-        self, url_template, key, start_date, end_date=None, max_days=30
-    ):
+    def _fetch_chunked_data(self, url_template, key, start_date, end_date=None):
         """Helper to fetch and aggregate data for APIs with max date range limits."""
+        max_days = 30
         if not end_date:
             url = url_template.format(date_range=start_date)
             return self.make_request("GET", url).json()
