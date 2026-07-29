@@ -3,6 +3,8 @@
 Fitbit API
 """
 
+import datetime
+
 import requests
 
 from .exceptions import FitbitAPIError
@@ -134,29 +136,58 @@ class FitbitAPI:
         response = self.make_request("GET", url)
         return response.json()
 
+    def _fetch_chunked_data(self, url_template, key, start_date, end_date=None):
+        """Fetch data in chunks <= 30 days if date range > 30 days."""
+        if not end_date:
+            url = url_template.format(date_range=start_date)
+            return self.make_request("GET", url).json()
+
+        start = (
+            datetime.date.fromisoformat(start_date)
+            if isinstance(start_date, str)
+            else start_date
+        )
+        end = (
+            datetime.date.fromisoformat(end_date)
+            if isinstance(end_date, str)
+            else end_date
+        )
+        if (end - start).days <= 30:
+            url = url_template.format(date_range=f"{start_date}/{end_date}")
+            return self.make_request("GET", url).json()
+
+        aggregated = []
+        curr_start = start
+        result_dict = {}
+        while curr_start <= end:
+            curr_end = min(curr_start + datetime.timedelta(days=30), end)
+            url = url_template.format(
+                date_range=f"{curr_start.isoformat()}/{curr_end.isoformat()}"
+            )
+            res = self.make_request("GET", url).json()
+            if not result_dict and isinstance(res, dict):
+                result_dict = res.copy()
+            if key in res and isinstance(res[key], list):
+                aggregated.extend(res[key])
+            curr_start = curr_end + datetime.timedelta(days=1)
+
+        result_dict[key] = aggregated
+        return result_dict
+
     def get_breathing_rate_summary(self, start_date, end_date=None):
         """Get Breathing Rate Summary by Interval and Data"""
-
-        date_range = f"{start_date}/{end_date}" if end_date else start_date
-        url = f"https://api.fitbit.com/1/user/-/br/date/{date_range}.json"
-        response = self.make_request("GET", url)
-        return response.json()
+        url_template = "https://api.fitbit.com/1/user/-/br/date/{date_range}.json"
+        return self._fetch_chunked_data(url_template, "br", start_date, end_date)
 
     def get_breathing_rate_intraday(self, start_date, end_date=None):
         """Get Breathing Rate Intraday by Interval and Data"""
-
-        date_range = f"{start_date}/{end_date}" if end_date else start_date
-        url = f"https://api.fitbit.com/1/user/-/br/date/{date_range}/all.json"
-        response = self.make_request("GET", url)
-        return response.json()
+        url_template = "https://api.fitbit.com/1/user/-/br/date/{date_range}/all.json"
+        return self._fetch_chunked_data(url_template, "br", start_date, end_date)
 
     def get_hrv_summary(self, start_date, end_date=None):
         """Get HRV Summary by Interval and Date"""
-
-        date_range = f"{start_date}/{end_date}" if end_date else start_date
-        url = f"https://api.fitbit.com/1/user/-/hrv/date/{date_range}.json"
-        response = self.make_request("GET", url)
-        return response.json()
+        url_template = "https://api.fitbit.com/1/user/-/hrv/date/{date_range}.json"
+        return self._fetch_chunked_data(url_template, "hrv", start_date, end_date)
 
     def get_body_time_series(self, resource_path, start_date, end_date=None):
         """Get Body Time Series by Interval and Date"""
