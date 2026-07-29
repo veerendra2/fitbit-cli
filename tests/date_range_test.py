@@ -73,6 +73,7 @@ class TestDateRangeAutoChunking(unittest.TestCase):
             ),
         ]
         self.api.make_request.assert_has_calls(expected_calls)
+        self.assertEqual(self.api.make_request.call_count, 2)
         self.assertEqual(len(res["br"]), 4)
 
 

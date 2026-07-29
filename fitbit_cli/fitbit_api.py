@@ -158,17 +158,21 @@ class FitbitAPI:
 
         aggregated = []
         curr_start = start
+        result_dict = {}
         while curr_start <= end:
             curr_end = min(curr_start + datetime.timedelta(days=30), end)
             url = url_template.format(
                 date_range=f"{curr_start.isoformat()}/{curr_end.isoformat()}"
             )
             res = self.make_request("GET", url).json()
+            if not result_dict and isinstance(res, dict):
+                result_dict = res.copy()
             if key in res and isinstance(res[key], list):
                 aggregated.extend(res[key])
             curr_start = curr_end + datetime.timedelta(days=1)
 
-        return {key: aggregated}
+        result_dict[key] = aggregated
+        return result_dict
 
     def get_breathing_rate_summary(self, start_date, end_date=None):
         """Get Breathing Rate Summary by Interval and Data"""
