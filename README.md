@@ -7,9 +7,9 @@
 
 > _This is not an official Fitbit CLI_
 
-> **Deprecation notice:** Fitbit is deprecating the legacy Fitbit Web API in favor of the [Google Health API](https://developers.google.com/health). Legacy Fitbit Web API endpoints are expected to be decommissioned in September 2026, and new integrations should use Google Health API instead.
+> **Archived:** The legacy Fitbit Web API and OAuth 2.0 endpoints were decommissioned on October 30, 2026, so this tool no longer works. This repository is archived and no further releases will be made.
 >
-> This CLI currently uses the legacy Fitbit Web API. There are no plans to migrate this project to the Google Health API. Until the Fitbit Web API is decommissioned, this project will be maintained in maintenance mode only and may be archived soon.
+> **Alternative:** [Google Health CLI](https://github.com/Google-Health-API/google-health-cli) (`ghealth`) — a CLI for the [Google Health API](https://developers.google.com/health), covering sleep, heart rate, SpO2, HRV, activity and more.
 
 Access your Fitbit data directly from your terminal 💻. View 💤 sleep logs, ❤️ heart rate, 🏋️‍♂️ activity levels, 🩸 SpO2, and more, all presented in a simple, easy-to-read table format!
 

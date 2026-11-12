@@ -32,7 +32,7 @@ setup(
     keywords=["fitbit", "fitbit-api", "cli", "python"],
     license="MIT",
     classifiers=[
-        "Development Status :: 5 - Production/Stable",
+        "Development Status :: 7 - Inactive",
         "Intended Audience :: End Users/Desktop",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
